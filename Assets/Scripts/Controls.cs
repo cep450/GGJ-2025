@@ -11,6 +11,7 @@ public class Controls : MonoBehaviour
 	// if the player presses one it reloads the level (and tells them exactly what happened and why)
 	// call SceneLoader.ReloadLevel()
 
+        //what the fuck is wrong with you
 
     // Start is called before the first frame update
     void Start()

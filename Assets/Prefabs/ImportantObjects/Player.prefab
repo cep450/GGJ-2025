@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 2353087673934632917}
   - component: {fileID: 6306791385211225959}
   - component: {fileID: 5288683641716896810}
+  - component: {fileID: 26849542283983869}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -212,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4ddefba4aad914599175ffe1d4db06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 0}
-  rb: {fileID: 0}
+  orientation: {fileID: 4024431755863523343}
+  rb: {fileID: 6306791385211225959}
   groundDrag: 5
   walkSpeed: 2500
   sprintSpeed: 4500
@@ -228,3 +229,20 @@ MonoBehaviour:
   crouchHeight: 0.5
   maxSlopeAngle: 40
   speedText: {fileID: 0}
+--- !u!114 &26849542283983869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d6b10e25dac0643a6073538e2e42c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 4024431755863523343}
+  playerTransform: {fileID: 4801224029982683578}
+  maxSlideTime: 1
+  slideForce: 6000
+  slideHeight: 0.4
