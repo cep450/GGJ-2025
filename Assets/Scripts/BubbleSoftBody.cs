@@ -48,14 +48,16 @@ public class BubbleSoftBody : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-        GenerateMesh();
+        //GenerateMesh();
+
+        MoveRigidbodies();
     }
 
     //Create the static verticies on start
     void SpawnRigidbodies()
     {
         IcosahedronGenerator staticVertsGen = new IcosahedronGenerator();
-        staticVertsGen.Initialize(transform.position);
+        staticVertsGen.Initialize();
         staticVertsGen.Subdivide(subdivisions);
 
         int vertexCount = icosahedron.Polygons.Count * 3;
@@ -72,18 +74,96 @@ public class BubbleSoftBody : MonoBehaviour
         }
 
         //Create transform points
-        for (int i = 0; i < vertices.Length; i++)
+        for (int i = 0; i < staticVertsGen.Vertices.Count; i++)
         {
-            staticVerticies.Add(Instantiate(staticPrefab, vertices[i], Quaternion.identity));
-            dynamicVerticies.Add(Instantiate(dynamicPrefab, vertices[i], Quaternion.identity));
+            //We use staticVertsGen here because we want to get the positions before they're rearranged but this loop up top
+            staticVerticies.Add(Instantiate(staticPrefab, staticVertsGen.Vertices[i], Quaternion.identity));
+            dynamicVerticies.Add(Instantiate(dynamicPrefab, staticVertsGen.Vertices[i], Quaternion.identity));
             dynamicVerticies[i].GetComponent<SpringJoint>().connectedBody = staticVerticies[i].GetComponent<Rigidbody>();
+            dynamicVerticies[i].GetComponent<Rigidbody>().mass = Random.Range(0.8f, 1.2f);
         }
     }
     
     //Move the verticies every frame update to coincide with the position of the object
-    void MoveStaticVerticies()
+    void MoveRigidbodies()
     {
+        IcosahedronGenerator staticVertsGen = new IcosahedronGenerator();
+        staticVertsGen.Initialize();
+        staticVertsGen.Subdivide(subdivisions);
 
+        int vertexCount = icosahedron.Polygons.Count * 3;
+        Vector3[] vertices = new Vector3[vertexCount];
+
+        //Create the initial Mesh shape
+        for (int i = 0; i < staticVertsGen.Polygons.Count; i++)
+        {
+            var poly = staticVertsGen.Polygons[i];
+
+            vertices[i * 3 + 0] = icosahedron.Vertices[poly.vertices[0]] + transform.position;
+            vertices[i * 3 + 1] = icosahedron.Vertices[poly.vertices[1]] + transform.position;
+            vertices[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]] + transform.position;
+        }
+
+        //Move transform points
+        for (int i = 0; i < staticVertsGen.Vertices.Count; i++)
+        {
+            staticVerticies[i].GetComponent<Rigidbody>().MovePosition(staticVertsGen.Vertices[i]);
+        }
+
+        List<Vector3> verticiesUpdated = new List<Vector3>();
+        for(int i = 0; i < staticVertsGen.Vertices.Count; i++)
+        {
+            verticiesUpdated.Add(dynamicVerticies[i].transform.position - transform.position); //Take away position offset
+        }
+
+
+        //START OVER
+
+        this.name = "IcoSphere";
+
+        if (this.sphereMesh)
+            Destroy(this.sphereMesh);
+
+        icosahedron = new IcosahedronGenerator();
+        icosahedron.Initialize(verticiesUpdated);
+        icosahedron.Subdivide(subdivisions);
+
+        this.sphereMesh = new GameObject("Sphere Mesh");
+        this.sphereMesh.transform.parent = this.transform;
+
+        MeshRenderer surfaceRenderer = this.sphereMesh.AddComponent<MeshRenderer>();
+        surfaceRenderer.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+
+        Mesh sphereMesh = new Mesh();
+
+        vertexCount = icosahedron.Polygons.Count * 3;
+        int[] indices = new int[vertexCount];
+
+        vertices = new Vector3[vertexCount];
+        Vector3[] normals = new Vector3[vertexCount];
+
+        for (int i = 0; i < icosahedron.Polygons.Count; i++)
+        {
+            var poly = icosahedron.Polygons[i];
+
+            indices[i * 3 + 0] = i * 3 + 0;
+            indices[i * 3 + 1] = i * 3 + 1;
+            indices[i * 3 + 2] = i * 3 + 2;
+
+            vertices[i * 3 + 0] = icosahedron.Vertices[poly.vertices[0]] + transform.position;
+            vertices[i * 3 + 1] = icosahedron.Vertices[poly.vertices[1]] + transform.position;
+            vertices[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]] + transform.position;
+
+            normals[i * 3 + 0] = icosahedron.Vertices[poly.vertices[0]] + transform.position;
+            normals[i * 3 + 1] = icosahedron.Vertices[poly.vertices[1]] + transform.position;
+            normals[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]] + transform.position;
+        }
+        sphereMesh.vertices = vertices;
+        sphereMesh.normals = normals;
+        sphereMesh.SetTriangles(indices, 0);
+
+        MeshFilter terrainFilter = this.sphereMesh.AddComponent<MeshFilter>();
+        terrainFilter.sharedMesh = sphereMesh;
     }
 
 	public void GenerateMesh()
@@ -94,7 +174,7 @@ public class BubbleSoftBody : MonoBehaviour
 			Destroy(this.sphereMesh);
 
 		icosahedron = new IcosahedronGenerator();
-		icosahedron.Initialize(transform.position);
+		icosahedron.Initialize();
 		icosahedron.Subdivide(subdivisions);
 
 		this.sphereMesh = new GameObject("Sphere Mesh");
@@ -154,7 +234,7 @@ public class IcosahedronGenerator
     public List<Polygon> Polygons { get => polygons; private set => polygons = value; }
     public List<Vector3> Vertices { get => vertices; private set => vertices = value; }
 
-    public void Initialize(Vector3 worldPos)
+    public void Initialize()
     {
         polygons = new List<Polygon>();
         vertices = new List<Vector3>();
@@ -179,6 +259,36 @@ public class IcosahedronGenerator
         vertices.Add(new Vector3(-t, 0, -1).normalized);
         vertices.Add(new Vector3(-t, 0, 1).normalized);
 
+
+        // And here's the formula for the 20 sides,
+        // referencing the 12 vertices we just created.
+        polygons.Add(new Polygon(0, 11, 5));
+        polygons.Add(new Polygon(0, 5, 1));
+        polygons.Add(new Polygon(0, 1, 7));
+        polygons.Add(new Polygon(0, 7, 10));
+        polygons.Add(new Polygon(0, 10, 11));
+        polygons.Add(new Polygon(1, 5, 9));
+        polygons.Add(new Polygon(5, 11, 4));
+        polygons.Add(new Polygon(11, 10, 2));
+        polygons.Add(new Polygon(10, 7, 6));
+        polygons.Add(new Polygon(7, 1, 8));
+        polygons.Add(new Polygon(3, 9, 4));
+        polygons.Add(new Polygon(3, 4, 2));
+        polygons.Add(new Polygon(3, 2, 6));
+        polygons.Add(new Polygon(3, 6, 8));
+        polygons.Add(new Polygon(3, 8, 9));
+        polygons.Add(new Polygon(4, 9, 5));
+        polygons.Add(new Polygon(2, 4, 11));
+        polygons.Add(new Polygon(6, 2, 10));
+        polygons.Add(new Polygon(8, 6, 7));
+        polygons.Add(new Polygon(9, 8, 1));
+    }
+
+    //Alternate version of Initalize where I feed in the verticies
+    public void Initialize(List<Vector3> newVertices)
+    {
+        polygons = new List<Polygon>();
+        vertices = newVertices;
 
         // And here's the formula for the 20 sides,
         // referencing the 12 vertices we just created.
