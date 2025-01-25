@@ -7,16 +7,18 @@ public class Blower : MonoBehaviour
 {
     public Camera playerCam;
     //fields for calculating detection
-    [SerializeField] Vector3 origin;
+    public Vector3 origin;
     [SerializeField] float radius;
     [SerializeField] Quaternion direction;
     [SerializeField] float range;
     [SerializeField] GameObject windOrigin;
     [SerializeField] GameObject windCollider;
 
-
     [SerializeField] float forceMagnitude;
 
+
+    [SerializeField] LayerMask terrainMask;
+    [SerializeField] LayerMask blowableMask;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,6 @@ public class Blower : MonoBehaviour
         //{
         //    gameObject.transform.Rotate(new Vector3(0.3f, 0, 0));
         //}
-
     }
 
 
@@ -60,16 +61,22 @@ public class Blower : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        print(other.gameObject.name);
+        //only try to move blowable objects
+        if(other.gameObject.tag == "Blowable")
+        {
+            print(other.gameObject.name);
 
-        //for each object that should be blown, calculate magnitude and direction of the force
-        //apply force
+            //for each object that should be blown, calculate magnitude and direction of the force
+            //apply force
 
-        Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
-        //rb.Addforce(Vector3 force);
-        rb.AddForce(gameObject.transform.up * -1 * forceMagnitude);
+            //rb.Addforce(Vector3 force);
+            rb.AddForce(gameObject.transform.up * -1 * forceMagnitude);
+        }
+        
     }
+
 
 
 }
