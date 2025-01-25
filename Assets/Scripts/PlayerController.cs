@@ -5,14 +5,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Fields
+    private enum MovementState
+    {
+        Walking,
+        Running,
+        Crouching,
+        Airborn
+    }
     [Header("Movement")]
     [SerializeField] private Transform orientation;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float movementSpeed;
+    [SerializeField] private float groundDrag;
+
+    [Header("Movement Speeds")]
+    private float movementSpeed;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float sprintSpeed;
+    [SerializeField] private float crouchSpeed;
+
+    [Header("Inputs")]
     private float horizontalInput;
     private float verticalInput;
     private Vector3 directionToMove;
-    [SerializeField] private float groundDrag;
 
     [Header("Grounded Logic")]
     [SerializeField] private float playerHeight;
@@ -24,28 +38,38 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
     private bool canJump = true;
-    
+
+    [Header("SprintingLogic")]
+    private bool isSprinting;
+    private float sprintWindow = 0.5f;
+    private float sprintWindowCounter;
+    private int sprintButtonPresses = 0;
+
+    [Header("CrouchingLogic")]
+    [SerializeField] private float crouchHeight;
+    private float normalHeight;
+
+    private MovementState movementState;
     #endregion Fields
-    // Start is called before the first frame update
     void Start()
     {
-        
+        sprintWindowCounter = sprintWindow;
+        normalHeight = transform.localScale.y;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Get Inputs
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-
         //Check if Grounded
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight + 0.2f, groundLayer);
-        CheckToJump();
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
+        Inputs();
+
+        //Evaluate State of player 
+        StateHandler();
+
         //Actually Move Player
         MovePlayer();
-        //Logic based on grounded or airborn
+
+        //Drag Logic based on grounded or airborn
         if(isGrounded)
         {
             rb.drag = groundDrag;
@@ -54,6 +78,34 @@ public class PlayerController : MonoBehaviour
         {
             rb.drag = 0;
         }
+    }
+
+    private void StateHandler()
+    {
+        if(isGrounded)
+        {
+            if (isSprinting)
+            {
+                movementState = MovementState.Running;
+                movementSpeed = sprintSpeed;
+            }
+            else if(Input.GetKey(KeyCode.LeftShift))
+            {
+                movementState = MovementState.Crouching;
+                movementSpeed = crouchSpeed;
+            }
+            else
+            {
+                movementState = MovementState.Walking;
+                movementSpeed = walkSpeed;
+            }
+        }
+
+        else
+        {
+            movementState = MovementState.Airborn;
+        }
+            
     }
 
     private void MovePlayer()
@@ -77,13 +129,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckToJump()
+    private void Inputs()
     {
+        //Get Inputs
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        SprintCheck();
+
         if (isGrounded && Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             canJump = false;
             Jump();
             Invoke("ResetJump", jumpCooldown);
+        }
+        if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
+            //Push player down a bit when they crouch
+            rb.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+        }
+        else if(isGrounded && Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, normalHeight, transform.localScale.z);
         }
     }
 
@@ -97,5 +165,35 @@ public class PlayerController : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
+    }
+
+    private void SprintCheck()
+    {
+        //See if we should count down the sprint window
+        if(sprintButtonPresses >= 1)
+        {
+            sprintWindowCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            sprintButtonPresses++;
+            //If we pressed twice in that time frame we are sprinting
+            if(sprintButtonPresses >= 2)
+            {
+                isSprinting = true;
+            }
+            else
+            {
+                isSprinting = false;
+            }
+        }
+
+        //Reset if the player realeases forward and its been enough time
+        else if (Input.GetKeyUp(KeyCode.W) && sprintWindowCounter <= 0)
+        {
+            sprintWindowCounter = sprintWindow;
+            sprintButtonPresses = 0;
+        }
     }
 }
