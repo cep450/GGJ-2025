@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
 
 	public enum Scene {
-		MENUS, GAMEPLAY
+		MENUS, GAMEPLAY, CREDITS
 	}
 
 	private static Scene currentScene = Scene.MENUS;
@@ -16,31 +16,33 @@ public class SceneLoader : MonoBehaviour
 	} private set { } }
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
-	public static void LoadGameplay() {
-		
+	public static void LoadGameplay() 
+	{
+		Time.timeScale = 1.0f;
 		SceneManager.LoadScene("Game");
 		currentScene = Scene.GAMEPLAY;
 	}
 
-	public static void ReloadLevel() {
+	public static void LoadCredits()
+	{
+		SceneManager.LoadScene("Credits");
+		currentScene = Scene.CREDITS;
+	}
 
+	public static void ReloadLevel() 
+	{
+		Time.timeScale = 1.0f;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public static void LoadMainMenu() {
 
-		SceneManager.LoadScene("Menus");
+		SceneManager.LoadScene("MainMenu");
 		currentScene = Scene.MENUS;
 	}
 
 	public static void ExitGame() {
-
+		Application.Quit();
 	}
 
 

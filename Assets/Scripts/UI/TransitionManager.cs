@@ -7,6 +7,7 @@ public class TransitionManager : MonoBehaviour
 {
     public void LoadLevel(string levelName)
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(levelName);
     }
 
