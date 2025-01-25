@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -49,7 +50,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float crouchHeight;
     private float normalHeight;
 
+    [Header("SlopeLogic")]
+    [SerializeField] private float maxSlopeAngle;
+    RaycastHit raycastSlopeHit;
+
     private MovementState movementState;
+    [SerializeField] TextMeshProUGUI speedText;
     #endregion Fields
     void Start()
     {
@@ -60,7 +66,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Check if Grounded
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
         Inputs();
 
         //Evaluate State of player 
@@ -78,6 +84,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.drag = 0;
         }
+
+        speedText.text = "Speed is " + rb.velocity.magnitude;
     }
 
     private void StateHandler()
@@ -112,7 +120,14 @@ public class PlayerController : MonoBehaviour
     {
         directionToMove = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        if(isGrounded)
+        //On Slope
+        if(OnSlope())
+        {
+            Debug.Log("Slope Movment");
+            rb.AddForce(GetSlopeMovementAngle() * Time.deltaTime * movementSpeed , ForceMode.Force);
+        }
+
+        else if(isGrounded)
         {
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed, ForceMode.Force);
         }
@@ -121,12 +136,30 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed * airMultiplier, ForceMode.Force);
         }
 
-        Vector3 gravityLessVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        if (gravityLessVelocity.magnitude > movementSpeed)
+        SpeedControl();
+
+        rb.useGravity = !OnSlope();
+    }
+
+    private void SpeedControl()
+    {
+        if(OnSlope())
         {
-            Vector3 newVelocity = rb.velocity.normalized * movementSpeed;
-            rb.velocity = new Vector3(newVelocity.x, rb.velocity.y, newVelocity.z);
+            if(rb.velocity.magnitude > movementSpeed * Time.deltaTime)
+            {
+                rb.velocity = rb.velocity.normalized * movementSpeed * Time.deltaTime;
+            }
         }
+        else
+        {
+            Vector3 gravityLessVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            if (gravityLessVelocity.magnitude > (movementSpeed * Time.deltaTime))
+            {
+                Vector3 newVelocity = rb.velocity.normalized * movementSpeed * Time.deltaTime;
+                rb.velocity = new Vector3(newVelocity.x, rb.velocity.y, newVelocity.z);
+            }
+        }
+
     }
 
     private void Inputs()
@@ -169,31 +202,50 @@ public class PlayerController : MonoBehaviour
 
     private void SprintCheck()
     {
+
         //See if we should count down the sprint window
-        if(sprintButtonPresses >= 1)
+        if (sprintButtonPresses >= 1)
         {
             sprintWindowCounter -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (movementState != MovementState.Crouching)
         {
-            sprintButtonPresses++;
-            //If we pressed twice in that time frame we are sprinting
-            if(sprintButtonPresses >= 2)
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                isSprinting = true;
+                sprintButtonPresses++;
+                //If we pressed twice in that time frame we are sprinting
+                if (sprintButtonPresses >= 2)
+                {
+                    isSprinting = true;
+                }
+                else
+                {
+                    isSprinting = false;
+                }
             }
-            else
-            {
-                isSprinting = false;
-            }
-        }
 
-        //Reset if the player realeases forward and its been enough time
-        else if (Input.GetKeyUp(KeyCode.W) && sprintWindowCounter <= 0)
-        {
-            sprintWindowCounter = sprintWindow;
-            sprintButtonPresses = 0;
+            //Reset if the player realeases forward and its been enough time
+            else if (Input.GetKeyUp(KeyCode.W) && sprintWindowCounter <= 0)
+            {
+                sprintWindowCounter = sprintWindow;
+                sprintButtonPresses = 0;
+            }
         }
+    }
+
+    private bool OnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out raycastSlopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, raycastSlopeHit.normal);
+            return angle <= maxSlopeAngle && angle != 0;
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeMovementAngle()
+    {
+        return (Vector3.ProjectOnPlane(directionToMove, raycastSlopeHit.normal)).normalized;
     }
 }
