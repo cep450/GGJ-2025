@@ -98,7 +98,7 @@ Transform:
   - {fileID: 4024431755863523343}
   - {fileID: 6659288697990429535}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3943440925370721735
 MeshFilter:
@@ -212,14 +212,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4ddefba4aad914599175ffe1d4db06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 4024431755863523343}
-  rb: {fileID: 6306791385211225959}
-  movementSpeed: 3500
+  orientation: {fileID: 0}
+  rb: {fileID: 0}
   groundDrag: 5
+  walkSpeed: 2500
+  sprintSpeed: 4500
+  crouchSpeed: 1000
   playerHeight: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 15
+  jumpForce: 10
   jumpCooldown: 0.5
-  airMultiplier: 0.1
+  airMultiplier: 0.6
+  crouchHeight: 0.5
+  maxSlopeAngle: 40
+  speedText: {fileID: 0}
