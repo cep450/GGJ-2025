@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
-        speedText.text = "Speed is " + rb.velocity.magnitude;
+        //speedText.text = "Speed is " + rb.velocity.magnitude;
     }
 
     private void StateHandler()
