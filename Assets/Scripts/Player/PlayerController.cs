@@ -113,7 +113,8 @@ public class PlayerController : MonoBehaviour
         {
             movementState = MovementState.Airborn;
         }
-            
+
+
     }
 
     private void MovePlayer()
@@ -167,6 +168,8 @@ public class PlayerController : MonoBehaviour
         //Get Inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        
 
         SprintCheck();
 
