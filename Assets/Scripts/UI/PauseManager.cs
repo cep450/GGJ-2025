@@ -23,12 +23,16 @@ public class PauseManager : MonoBehaviour
         {
             Time.timeScale = 1.0f;
             textMesh.text = "Pause";
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             isPaused = false;
         }
         else
         {
             Time.timeScale = 0.0f;
             textMesh.text = "Resume";
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             isPaused = true;
         }
 

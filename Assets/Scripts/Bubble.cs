@@ -46,6 +46,7 @@ public class Bubble : MonoBehaviour
         //Insert Pop VFX
         gameObject.SetActive(false);
         //Insert Retry Level Pop Up
+        Cursor.lockState = CursorLockMode.Confined;
         gameOverCanvas.SetActive(true);
         
     }
