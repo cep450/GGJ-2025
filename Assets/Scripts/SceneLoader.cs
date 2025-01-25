@@ -19,7 +19,7 @@ public class SceneLoader : MonoBehaviour
 	public static void LoadGameplay() 
 	{
 		Time.timeScale = 1.0f;
-		SceneManager.LoadScene("Game");
+		SceneManager.LoadScene("MallTest");
 		currentScene = Scene.GAMEPLAY;
 	}
 

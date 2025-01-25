@@ -63,7 +63,6 @@ public class SlidingController : MonoBehaviour
 
     private void StartSlide()
     {
-        print("YIPEEE");
         isSliding = true;
         transform.localScale = new Vector3(transform.localScale.x, slideHeight, transform.localScale.z);
         //Push player down a bit when they slide
