@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: d8231c7cf122c324890c704dead38e27
+  - enabled: 1
+    path: Assets/Scenes/MallTest.unity
+    guid: 1b2a79e0081296a4f86669141f0b4c7b
   m_configObjects: {}
