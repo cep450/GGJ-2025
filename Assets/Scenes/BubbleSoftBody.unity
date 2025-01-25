@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -412,6 +412,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subdivisions: 1
   shader: {fileID: 0}
+  staticPrefab: {fileID: 6361096267822402250, guid: 3719270fc00fcd940a23751118fcb87b,
+    type: 3}
+  dynamicPrefab: {fileID: 6902459745519840081, guid: a79464570eee1124da1b1251fc16dec0,
+    type: 3}
 --- !u!65 &1852375925
 BoxCollider:
   m_ObjectHideFlags: 0

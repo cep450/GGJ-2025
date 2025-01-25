@@ -12,17 +12,20 @@ public class BubbleSoftBody : MonoBehaviour
     //Render the Sphere mesh using the DYNAMIC points (UPDATE)
 
 	//Fields
+    //Sphere Generation
 	[Header("Resolution")]
 	[Range(0, 5)] [SerializeField] private int subdivisions = 1;
-
 	[Header("Graphics")]
 	[SerializeField] private Shader shader;
-
 	private GameObject sphereMesh;
-
 	private IcosahedronGenerator icosahedron;
-
 	private int lastSubdivision = int.MinValue;
+
+    //SoftBody
+    [SerializeField] GameObject staticPrefab;
+    [SerializeField] GameObject dynamicPrefab;
+    List<GameObject> staticVerticies = new List<GameObject>();
+    List<GameObject> dynamicVerticies = new List<GameObject>();
 
 	// Start is called before the first frame update
 	void Start()
@@ -37,12 +40,50 @@ public class BubbleSoftBody : MonoBehaviour
 
 		//Generate Sphere
 		GenerateMesh();
+
+        //Create the RBs that will form the softbody
+        SpawnRigidbodies();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
         GenerateMesh();
+    }
+
+    //Create the static verticies on start
+    void SpawnRigidbodies()
+    {
+        IcosahedronGenerator staticVertsGen = new IcosahedronGenerator();
+        staticVertsGen.Initialize(transform.position);
+        staticVertsGen.Subdivide(subdivisions);
+
+        int vertexCount = icosahedron.Polygons.Count * 3;
+        Vector3[] vertices = new Vector3[vertexCount];
+
+        //Create the initial Mesh shape
+        for (int i = 0; i < staticVertsGen.Polygons.Count; i++)
+        {
+            var poly = staticVertsGen.Polygons[i];
+
+            vertices[i * 3 + 0] = staticVertsGen.Vertices[poly.vertices[0]] + transform.position;
+            vertices[i * 3 + 1] = staticVertsGen.Vertices[poly.vertices[1]] + transform.position;
+            vertices[i * 3 + 2] = staticVertsGen.Vertices[poly.vertices[2]] + transform.position;
+        }
+
+        //Create transform points
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            staticVerticies.Add(Instantiate(staticPrefab, vertices[i], Quaternion.identity));
+            dynamicVerticies.Add(Instantiate(dynamicPrefab, vertices[i], Quaternion.identity));
+            dynamicVerticies[i].GetComponent<SpringJoint>().connectedBody = staticVerticies[i].GetComponent<Rigidbody>();
+        }
+    }
+    
+    //Move the verticies every frame update to coincide with the position of the object
+    void MoveStaticVerticies()
+    {
+
     }
 
 	public void GenerateMesh()
@@ -93,6 +134,16 @@ public class BubbleSoftBody : MonoBehaviour
 		MeshFilter terrainFilter = this.sphereMesh.AddComponent<MeshFilter>();
 		terrainFilter.sharedMesh = sphereMesh;
 	}
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < dynamicVerticies.Count; i++)
+        {
+            Gizmos.DrawSphere(dynamicVerticies[i].transform.position, 0.1f);
+        }
+    }
 }
 
 public class IcosahedronGenerator
@@ -127,13 +178,6 @@ public class IcosahedronGenerator
         vertices.Add(new Vector3(t, 0, 1).normalized);
         vertices.Add(new Vector3(-t, 0, -1).normalized);
         vertices.Add(new Vector3(-t, 0, 1).normalized);
-
-        //Create transform points
-        for(int i = 0; i < vertices.Count; i++)
-        {
-            GameObject gameObject = new GameObject("Point");
-            gameObject.transform.position = (vertices[i]);
-        }
 
 
         // And here's the formula for the 20 sides,
