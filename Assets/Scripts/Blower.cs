@@ -15,6 +15,9 @@ public class Blower : MonoBehaviour
     public GameObject windBlast;
     [SerializeField] Transform spawnTransform;
 
+    public Input blowInput;
+    public Input burstInput;
+
     private GameObject wind;
     // Start is called before the first frame update
     void Start()
@@ -28,12 +31,12 @@ public class Blower : MonoBehaviour
         //state machine that handles the type of wind the player wants to shoot
 
         //if press space, spawn a steady wind
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             SpawnSteadyWind();
         }
         //if release space, despawn the steady wind
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.P))
         {
             GameObject.Destroy(wind);
         }
