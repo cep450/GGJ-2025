@@ -1368,6 +1368,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
+      propertyPath: playerHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
       propertyPath: airMultiplier
       value: 0.6
       objectReference: {fileID: 0}
@@ -1532,6 +1537,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 361307521528482901, guid: fc4831c265cdc214da60bcd8fe5c0365,
+        type: 3}
+      propertyPath: windSteady
+      value: 
+      objectReference: {fileID: 3240057813605901809, guid: d31e3f671409a824e8d678bc0799b2b4,
+        type: 3}
     - target: {fileID: 4107305567949047436, guid: fc4831c265cdc214da60bcd8fe5c0365,
         type: 3}
       propertyPath: orientation
@@ -1668,7 +1679,7 @@ PrefabInstance:
     - target: {fileID: 7687529873121749874, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.75
+      value: 13.86
       objectReference: {fileID: 0}
     - target: {fileID: 7687529873121749874, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
