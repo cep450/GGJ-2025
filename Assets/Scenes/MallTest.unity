@@ -26469,14 +26469,14 @@ PrefabInstance:
       objectReference: {fileID: 801988127}
     - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
-      propertyPath: gravityVector.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
-        type: 3}
       propertyPath: endGameTextObject
       value: 
       objectReference: {fileID: 1665505300}
+    - target: {fileID: 4155543673121446160, guid: c264b76341595f543b13a323cb89c70f,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6908362310650887534, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
       propertyPath: m_Name
