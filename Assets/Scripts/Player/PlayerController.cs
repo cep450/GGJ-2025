@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform orientation;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float groundDrag;
+	[SerializeField] private float airDrag;
 
     [Header("Movement Speeds")]
     private float movementSpeed;
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.drag = 0;
+            rb.drag = airDrag;
         }
 
         if(debug)
@@ -146,13 +147,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-	public Vector3 GetPlayerForward() {
-		return orientation.forward * verticalInput + orientation.right * horizontalInput;
-	}
-
     private void MovePlayer()
     {
-        directionToMove = GetPlayerForward();
+        directionToMove = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         //On Slope
         if(OnSlope())
@@ -162,10 +159,13 @@ public class PlayerController : MonoBehaviour
 
         else if(isGrounded)
         {
+			// walking
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed, ForceMode.Force);
         }
         else
         {
+			// air control- ignore forward input, but listen to sideways and backwards
+			directionToMove = (orientation.forward * Mathf.Min(verticalInput, 0)) + orientation.right * horizontalInput;
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed * airMultiplier, ForceMode.Force);
         }
 
@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
         print("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-		rb.AddForce(GetPlayerForward() * jumpForceForward, ForceMode.Impulse);
+		rb.AddForce(orientation.forward * jumpForceForward, ForceMode.Impulse);
     }
 
     private void ResetJump()
