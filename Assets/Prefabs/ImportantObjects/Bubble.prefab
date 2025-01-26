@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverCanvas: {fileID: 0}
-  gravityVector: {x: 0, y: -0.25, z: 0}
+  gravityVector: {x: 0, y: -0.2, z: 0}
   constantForce: {fileID: 5791022429509512462}
   goalManager: {fileID: 0}
   driftTimer: 0

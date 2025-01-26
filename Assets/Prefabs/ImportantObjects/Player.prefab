@@ -223,17 +223,17 @@ MonoBehaviour:
   rb: {fileID: 6306791385211225959}
   groundDrag: 5
   airDrag: 2
-  walkSpeed: 3000
-  sprintSpeed: 5000
-  crouchSpeed: 2000
+  walkSpeed: 2000
+  sprintSpeed: 3000
+  crouchSpeed: 1500
   playerHeight: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 11
-  jumpForceForward: 11
+  jumpForce: 12
+  jumpForceForward: 12
   jumpCooldown: 0.1
-  airMultiplier: 0.5
+  airMultiplier: 0.4
   maxJumps: 2
   jumpBufferTime: 0.1
   slamForce: 27
@@ -262,7 +262,7 @@ MonoBehaviour:
   playerTransform: {fileID: 4801224029982683578}
   speedLines: {fileID: 0}
   maxSlideTime: 3
-  slideForce: 15000
+  slideForce: 25000
   slideHeight: 0.35
   slidingEmmitter: {fileID: 2906831925037169307}
 --- !u!114 &771037819859431293
