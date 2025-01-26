@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
         Walking,
         Running,
         Crouching,
+        Sliding,
         Airborn
     }
     [Header("Movement")]
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool canJump = true;
 
     [Header("SprintingLogic")]
-    private bool isSprinting;
+    public bool isSprinting;
     private float sprintWindow = 0.5f;
     private float sprintWindowCounter;
     private int sprintButtonPresses = 0;

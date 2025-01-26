@@ -226,8 +226,10 @@ MonoBehaviour:
   jumpForce: 10
   jumpCooldown: 0.5
   airMultiplier: 0.6
+  isSprinting: 0
   crouchHeight: 0.5
   maxSlopeAngle: 40
+  debug: 0
   speedText: {fileID: 0}
 --- !u!114 &26849542283983869
 MonoBehaviour:
@@ -244,5 +246,5 @@ MonoBehaviour:
   orientation: {fileID: 4024431755863523343}
   playerTransform: {fileID: 4801224029982683578}
   maxSlideTime: 1
-  slideForce: 6000
+  slideForce: 15000
   slideHeight: 0.4

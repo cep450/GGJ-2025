@@ -27,7 +27,7 @@ public class SlidingController : MonoBehaviour
     private float verticalInput;
 
     //I dont feel like going back and reediting everything if I thought of the wrong key so here we are
-    private KeyCode slideKey = KeyCode.C;
+    private KeyCode slideKey = KeyCode.LeftShift;
     #endregion Fields
     // Start is called before the first frame update
     void Start()
@@ -42,8 +42,13 @@ public class SlidingController : MonoBehaviour
     void Update()
     {
         Inputs();
-        if(Input.GetKeyDown(slideKey) && (verticalInput != 0 || horizontalInput != 0))
+        /*
+        Debug.Log("sliding = " + Input.GetKeyDown(slideKey));
+        Debug.Log("Inputing = " + (verticalInput != 0 || horizontalInput != 0));
+        Debug.Log("Sprint Key = " + pc.isSprinting);*/
+        if(Input.GetKeyDown(slideKey) && (verticalInput != 0 || horizontalInput != 0) && pc.isSprinting)
         {
+            Debug.Log("Now Sliding?");
             StartSlide();
         }
         if(Input.GetKeyUp(slideKey) && isSliding)
@@ -72,7 +77,7 @@ public class SlidingController : MonoBehaviour
     private void Sliding()
     {
         slideDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        rb.AddForce(slideDirection * Time.deltaTime * slideForce, ForceMode.Force);
+        rb.AddForce(slideDirection * Time.fixedDeltaTime * slideForce, ForceMode.Force);
         slideTime -= Time.deltaTime;
         if(slideTime <= 0)
         {
