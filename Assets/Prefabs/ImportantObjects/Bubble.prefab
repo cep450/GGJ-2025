@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8876658202869465504}
   - component: {fileID: 4155543673121446160}
   - component: {fileID: 5791022429509512462}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bubble
   m_TagString: Blowable
   m_Icon: {fileID: 0}

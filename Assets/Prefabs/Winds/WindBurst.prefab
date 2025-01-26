@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4858088810484510308}
   - component: {fileID: 3890881746640816840}
   - component: {fileID: 290110263951154448}
-  - component: {fileID: 8083214077717815960}
   - component: {fileID: 4568867717487182660}
+  - component: {fileID: 1419826683006501037}
   m_Layer: 0
   m_Name: WindBurst
   m_TagString: Untagged
@@ -99,37 +99,16 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &8083214077717815960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6470062616826517308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af60bd375d67cc54b83b4e39fc3443ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  windOrigin: {fileID: 0}
-  windCollider: {fileID: 0}
-  forceMagnitude: 1750
-  terrainMask:
-    serializedVersion: 2
-    m_Bits: 0
-  blowableMask:
-    serializedVersion: 2
-    m_Bits: 0
+  m_Radius: 0.50449884
+  m_Height: 1.2044857
+  m_Direction: 2
+  m_Center: {x: 0.02364181, y: 0, z: 0.016396848}
 --- !u!114 &4568867717487182660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,5 +121,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3db8fa2375fa184984b435a0c8df428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifespan: 0.3
+  lifespan: 1
   speed: 0.05
+  explosionTimer: 1
+  layersToBomb:
+    serializedVersion: 2
+    m_Bits: 256
+  range: 3
+  maxExplosionRange: 0
+  explosionForce: 0.5
+--- !u!54 &1419826683006501037
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470062616826517308}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
