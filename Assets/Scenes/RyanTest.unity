@@ -1309,6 +1309,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
       propertyPath: jumpForce
       value: 10
       objectReference: {fileID: 0}
@@ -1474,6 +1479,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031986569010073552, guid: 8b21a09ae0af6d54dac99c1180cdf5ea,
+        type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6268274458025048455, guid: 8b21a09ae0af6d54dac99c1180cdf5ea,
         type: 3}

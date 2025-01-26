@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
     RaycastHit raycastSlopeHit;
 
     private MovementState movementState;
+
+    [Header("Debug")]
+    [SerializeField] private bool debug;
     [SerializeField] TextMeshProUGUI speedText;
     #endregion Fields
     void Start()
@@ -85,22 +88,26 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
-        //speedText.text = "Speed is " + rb.velocity.magnitude;
+        if(debug)
+        {
+            speedText.text = "Speed is " + rb.velocity.magnitude;
+        }
+
     }
 
     private void StateHandler()
     {
         if(isGrounded)
         {
-            if (isSprinting)
-            {
-                movementState = MovementState.Running;
-                movementSpeed = sprintSpeed;
-            }
-            else if(Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 movementState = MovementState.Crouching;
                 movementSpeed = crouchSpeed;
+            }
+            else if (isSprinting)
+            {
+                movementState = MovementState.Running;
+                movementSpeed = sprintSpeed;
             }
             else
             {
