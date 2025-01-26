@@ -58,7 +58,9 @@ public class Bubble : MonoBehaviour
         popEmmitter.Play();
 
         //Insert Retry Level Pop Up
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		CameraMover.moveCamera = false;
         gameOverCanvas.SetActive(true);
         scoreText.text = $"Final Score: {goalManager.score}";
         StartCoroutine(TextGenerator());

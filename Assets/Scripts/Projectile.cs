@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private float maxExplosionRange;
     [SerializeField] float explosionForce;
+	[SerializeField] float explosionUpTransform = 0.5f;
+	[SerializeField] float explosionRadius = 10.0f;
     #endregion
     // Start is called before the first frame update
 
@@ -73,9 +75,9 @@ public class Projectile : MonoBehaviour
             Collider[] hits = Physics.OverlapSphere(transform.position, range, layersToBomb);
             foreach (Collider c in hits)
             {
-                float upForce = 1.5f;
-                if (c.CompareTag("Player")) upForce = 0;
-                c.attachedRigidbody.AddExplosionForce(explosionForce, gameObject.transform.position, 0.0f, upForce, ForceMode.Impulse);
+				float upModifier = explosionUpTransform;
+                if (c.CompareTag("Player")) upModifier = 0;
+                c.attachedRigidbody.AddExplosionForce(explosionForce, gameObject.transform.position, explosionRadius, upModifier, ForceMode.Impulse);
             }
 
             explosionTimer -= Time.deltaTime;

@@ -7,6 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     private bool isPaused = false;
     [SerializeField] private GameObject pauseScreen;
+	[SerializeField] private GameObject controlsReference;
 
     private void Update()
     {
@@ -14,6 +15,13 @@ public class PauseManager : MonoBehaviour
         {
             TogglePause();
         }
+
+		// controls reference 
+		if(Input.GetKey(KeyCode.Tab)) {
+			controlsReference.SetActive(true);
+		} else {
+			controlsReference.SetActive(false);
+		}
     }
 
     public void TogglePause()
@@ -30,7 +38,7 @@ public class PauseManager : MonoBehaviour
         {
             print("Paused");
             Time.timeScale = 0.0f;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             isPaused = true;
         }
