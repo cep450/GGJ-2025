@@ -2086,7 +2086,7 @@ PrefabInstance:
     - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
       propertyPath: gravityVector.y
-      value: 0
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
