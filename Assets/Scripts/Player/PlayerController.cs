@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
 	[SerializeField] private int maxJumps = 2;
+	[SerializeField] private float jumpBufferTime = 0.25f;
     private bool canJump = true;
 	private int jumpCount = 0;
 	private float jumpCountdown = 0f;
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
 	[Header("Ground Slam Logic")]
 	[SerializeField] private float slamForce;
 	private bool slamming = false;
+	private GameObject slamLines;
 
     [Header("Sprinting Logic")]
     public bool isSprinting;
@@ -80,6 +82,9 @@ public class PlayerController : MonoBehaviour
     {
         sprintWindowCounter = sprintWindow;
         normalHeight = transform.localScale.y;
+
+		slamLines = GameObject.FindGameObjectWithTag("SlamLines");
+		slamLines.SetActive(false);
     }
 
     void Update()
@@ -211,7 +216,7 @@ public class PlayerController : MonoBehaviour
 			jumpCount++;
             Jump();
 			jumpCountdown = jumpCooldown;
-            jumpBuffer = 0.33f;
+            jumpBuffer = jumpBufferTime;
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -269,11 +274,13 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(-transform.up * slamForce, ForceMode.Impulse);
 		//TODO create some push force and particles when you land, e.g. spawn a projectile?
 		slamming = true;
+		slamLines.SetActive(true);
 	}
 
 	private void SlamUpdate() {
 		if(isGrounded) {
 			slamming = false;
+			slamLines.SetActive(false);
 		}
 	}
 
