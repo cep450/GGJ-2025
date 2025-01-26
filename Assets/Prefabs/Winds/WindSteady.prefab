@@ -177,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 2617309340198765252, guid: 58328ea78f14dcb499bbc57b900ad5fa,
         type: 3}
       propertyPath: forceMagnitude
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8880044648773346614, guid: 58328ea78f14dcb499bbc57b900ad5fa,
         type: 3}
@@ -186,8 +186,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8880044648773346614, guid: 58328ea78f14dcb499bbc57b900ad5fa,
         type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880044648773346614, guid: 58328ea78f14dcb499bbc57b900ad5fa,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8880044648773346614, guid: 58328ea78f14dcb499bbc57b900ad5fa,
         type: 3}

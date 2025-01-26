@@ -12,6 +12,8 @@ public class WindSteady : MonoBehaviour
 
     [SerializeField] LayerMask terrainMask;
     [SerializeField] LayerMask blowableMask;
+    private int collisionBufferCap = 2;
+    private int collisionBufferCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -57,11 +59,17 @@ public class WindSteady : MonoBehaviour
             print("Blowing");
             //for each object that should be blown, calculate magnitude and direction of the force
             //apply force
+            collisionBufferCounter++;
+            if(collisionBufferCounter >= collisionBufferCap)
+            {
+                collisionBufferCounter = 0;
+                Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
-            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+                //rb.Addforce(Vector3 force);
+                Debug.Log("Wind Force " + (gameObject.transform.up.normalized + new Vector3(0, -8.4f, 0)));
+                rb.AddForce((gameObject.transform.up.normalized + new Vector3(0, -8.4f, 0)) * -1 * forceMagnitude);
+            }
 
-            //rb.Addforce(Vector3 force);
-            rb.AddForce((gameObject.transform.up + new Vector3(0,-0.01f,0)) * -1 * forceMagnitude);
         }
         
     }
