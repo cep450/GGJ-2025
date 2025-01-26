@@ -8,6 +8,7 @@ public class SlidingController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform orientation;
     [SerializeField] private Transform playerTransform;
+	[SerializeField] private GameObject speedLines;
     private Vector3 slideDirection;
     private Rigidbody rb;
     private PlayerController pc;
@@ -36,6 +37,9 @@ public class SlidingController : MonoBehaviour
         pc = GetComponent<PlayerController>();
         normalHeight = transform.localScale.y;
         slideTime = maxSlideTime;
+
+		speedLines = GameObject.FindGameObjectWithTag("SpeedLines");
+		speedLines.SetActive(false);
     }
 
     // Update is called once per frame
@@ -72,6 +76,7 @@ public class SlidingController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, slideHeight, transform.localScale.z);
         //Push player down a bit when they slide
         rb.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+		speedLines.SetActive(true);
     }
 
     private void Sliding()
@@ -90,6 +95,7 @@ public class SlidingController : MonoBehaviour
         isSliding = false;
         slideTime = maxSlideTime;
         transform.localScale = new Vector3(transform.localScale.x, normalHeight, transform.localScale.z);
+		speedLines.SetActive(false);
     }
 
     private void Inputs()
