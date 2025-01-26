@@ -48,25 +48,16 @@ public class BubbleSoftBody : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
         MoveRigidbodies();
-
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            GetComponent<Rigidbody>().AddForce(100.0f, 100.0f, 100.0f);
-        }
-        else if(Input.GetKeyDown(KeyCode.S))
-        {
-            GetComponent<Rigidbody>().AddForce(-100.0f, -100.0f, -100.0f);
-        }
     }
 
     //Create the static verticies on start
     void SpawnRigidbodies()
     {
         IcosahedronGenerator staticVertsGen = new IcosahedronGenerator();
-        staticVertsGen.Initialize();
+        staticVertsGen.Initialize(-transform.position);
         staticVertsGen.Subdivide(subdivisions);
 
         int vertexCount = icosahedron.Polygons.Count * 3;
@@ -98,7 +89,7 @@ public class BubbleSoftBody : MonoBehaviour
     void MoveRigidbodies()
     {
         IcosahedronGenerator staticVertsGen = new IcosahedronGenerator();
-        staticVertsGen.Initialize();
+        staticVertsGen.Initialize(Vector3.zero);
         staticVertsGen.Subdivide(subdivisions);
 
         int vertexCount = icosahedron.Polygons.Count * 3;
@@ -185,7 +176,7 @@ public class BubbleSoftBody : MonoBehaviour
 			Destroy(this.sphereMesh);
 
 		icosahedron = new IcosahedronGenerator();
-		icosahedron.Initialize();
+		icosahedron.Initialize(transform.position);
 		icosahedron.Subdivide(subdivisions);
 
 		this.sphereMesh = new GameObject("Sphere Mesh");
@@ -247,7 +238,7 @@ public class IcosahedronGenerator
     public List<Polygon> Polygons { get => polygons; private set => polygons = value; }
     public List<Vector3> Vertices { get => vertices; private set => vertices = value; }
 
-    public void Initialize()
+    public void Initialize(Vector3 worldPos) //Need to subtract worldposition when you spawn the initial points
     {
         polygons = new List<Polygon>();
         vertices = new List<Vector3>();
@@ -259,18 +250,18 @@ public class IcosahedronGenerator
 
         float t = (1.0f + Mathf.Sqrt(5.0f)) / 2.0f;
 
-        vertices.Add(new Vector3(-1, t, 0).normalized);
-        vertices.Add(new Vector3(1, t, 0).normalized);
-        vertices.Add(new Vector3(-1, -t, 0).normalized);
-        vertices.Add(new Vector3(1, -t, 0).normalized);
-        vertices.Add(new Vector3(0, -1, t).normalized);
-        vertices.Add(new Vector3(0, 1, t).normalized);
-        vertices.Add(new Vector3(0, -1, -t).normalized);
-        vertices.Add(new Vector3(0, 1, -t).normalized);
-        vertices.Add(new Vector3(t, 0, -1).normalized);
-        vertices.Add(new Vector3(t, 0, 1).normalized);
-        vertices.Add(new Vector3(-t, 0, -1).normalized);
-        vertices.Add(new Vector3(-t, 0, 1).normalized);
+        vertices.Add(new Vector3(-1, t, 0).normalized - worldPos);
+        vertices.Add(new Vector3(1, t, 0).normalized - worldPos);
+        vertices.Add(new Vector3(-1, -t, 0).normalized - worldPos);
+        vertices.Add(new Vector3(1, -t, 0).normalized - worldPos);
+        vertices.Add(new Vector3(0, -1, t).normalized - worldPos);
+        vertices.Add(new Vector3(0, 1, t).normalized - worldPos);
+        vertices.Add(new Vector3(0, -1, -t).normalized - worldPos);
+        vertices.Add(new Vector3(0, 1, -t).normalized - worldPos);
+        vertices.Add(new Vector3(t, 0, -1).normalized - worldPos);
+        vertices.Add(new Vector3(t, 0, 1).normalized - worldPos);
+        vertices.Add(new Vector3(-t, 0, -1).normalized - worldPos);
+        vertices.Add(new Vector3(-t, 0, 1).normalized - worldPos);
 
 
         // And here's the formula for the 20 sides,
