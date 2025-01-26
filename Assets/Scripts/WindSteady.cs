@@ -64,7 +64,7 @@ public class WindSteady : MonoBehaviour
             collisionBufferCounter++;
             if(collisionBufferCounter >= collisionBufferCap)
             {
-                Vector3 upwardsForce = new Vector3(0, upForceAmount, 0);
+                Vector3 upwardsForce = new Vector3(0, -2.0f, 0);
                 int windDirection = -1;
                 if(other.gameObject.GetComponent<Bubble>() == null)
                 {
@@ -75,7 +75,7 @@ public class WindSteady : MonoBehaviour
                 Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
                 //rb.Addforce(Vector3 force);
-                rb.AddForce((gameObject.transform.up.normalized + upwardsForce) * windDirection * forceMagnitude);
+                rb.AddForce(((gameObject.transform.up.normalized * -5.0f) + upwardsForce) * windDirection * forceMagnitude);
             }
 
         }

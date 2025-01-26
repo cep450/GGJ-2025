@@ -25,7 +25,7 @@ public class SceneLoader : MonoBehaviour
 
 	public static void LoadCredits()
 	{
-		SceneManager.LoadScene("Credits");
+		SceneManager.LoadScene("Credits3D");
 		currentScene = Scene.CREDITS;
 	}
 
