@@ -135,7 +135,7 @@ PrefabInstance:
     - target: {fileID: 8926541731668035467, guid: f510810803452ff4b8b3f791afbd6acf,
         type: 3}
       propertyPath: forceMagnitude
-      value: 900
+      value: 1300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

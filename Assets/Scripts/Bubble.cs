@@ -10,7 +10,7 @@ public class Bubble : MonoBehaviour
     [Header("Gravity Fields")]
     [SerializeField] Vector3 gravityVector;
     [SerializeField] ConstantForce constantForce;
-    private float randomMovement = 50.05f;
+    private float randomMovement = 10.05f;
     [SerializeField] private GoalManager goalManager;
     [SerializeField] private float driftTimer;
     private float driftCounter;
@@ -25,6 +25,7 @@ public class Bubble : MonoBehaviour
         if(driftCounter <= 0)
         {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            driftCounter = driftTimer;
         }
         rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -1, 0), rb.velocity.z);
     }

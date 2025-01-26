@@ -131,7 +131,6 @@ public class PlayerController : MonoBehaviour
         //On Slope
         if(OnSlope())
         {
-            Debug.Log("Slope Movment");
             rb.AddForce(GetSlopeMovementAngle() * Time.deltaTime * movementSpeed , ForceMode.Force);
         }
 
