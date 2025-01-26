@@ -48,9 +48,16 @@ public class BubbleSoftBody : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-        //GenerateMesh();
-
         MoveRigidbodies();
+
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            GetComponent<Rigidbody>().AddForce(100.0f, 100.0f, 100.0f);
+        }
+        else if(Input.GetKeyDown(KeyCode.S))
+        {
+            GetComponent<Rigidbody>().AddForce(-100.0f, -100.0f, -100.0f);
+        }
     }
 
     //Create the static verticies on start
@@ -107,7 +114,7 @@ public class BubbleSoftBody : MonoBehaviour
         //Move transform points
         for (int i = 0; i < staticVertsGen.Vertices.Count; i++)
         {
-            staticVerticies[i].GetComponent<Rigidbody>().MovePosition(staticVertsGen.Vertices[i]);
+            staticVerticies[i].GetComponent<Rigidbody>().MovePosition(staticVertsGen.Vertices[i] + transform.position);
         }
 
         List<Vector3> verticiesUpdated = new List<Vector3>();
