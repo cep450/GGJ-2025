@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 
 public class Bubble : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class Bubble : MonoBehaviour
     private string endGameText = "Hate to burst your bubble,\nbut you burst your bubble.";
     [SerializeField] private TextMeshProUGUI endGameTextObject;
     //And this
-    [SerializeField] private AudioSource popSFX;
+    [SerializeField] private StudioEventEmitter popEmmitter;
     //Replace this Anna
-    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private StudioEventEmitter musicEmmitter;
     #endregion Fields
     private void FixedUpdate()
     {
@@ -53,8 +54,8 @@ public class Bubble : MonoBehaviour
     {
         //Insert Pop VFX
         gameObject.GetComponent<MeshRenderer>().enabled = false;
-        musicSource.Pause();
-        popSFX.Play();
+        //musicEmmitter.Stop();
+        popEmmitter.Play();
 
         //Insert Retry Level Pop Up
         Cursor.lockState = CursorLockMode.Confined;
@@ -77,12 +78,6 @@ public class Bubble : MonoBehaviour
             endGameTextObject.text = endGameText.Substring(0, i + 1);
             yield return new WaitForSeconds(0.035f);
 
-            if(i == 10)
-            {
-                musicSource.Play();
-                musicSource.volume = 0.5f;
-                musicSource.pitch = 0.5f;
-            }
         }
         gameObject.SetActive(false);
     }

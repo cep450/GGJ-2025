@@ -12991,6 +12991,30 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &661851072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2471985609641996630, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+    type: 3}
+  m_PrefabInstance: {fileID: 966777540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &661851074 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+    type: 3}
+  m_PrefabInstance: {fileID: 966777540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &664964754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1801476723521116, guid: ac8f5c6c7b7162f4d8776e86306a5e0e,
@@ -16528,6 +16552,51 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26849542283983869, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: slidingEmmitter
+      value: 
+      objectReference: {fileID: 661851072}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: EventReference.Path
+      value: event:/SFX/Looping/movement_footstep_walk
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -145206408
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1112091159
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: -398834026
+      objectReference: {fileID: 0}
+    - target: {fileID: 771037819859431293, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 361698269
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471985609641996630, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4801224029982683578, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
       propertyPath: m_RootOrder
@@ -16583,6 +16652,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: speedText
+      value: 
+      objectReference: {fileID: 1315071978}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: walkingEmmitter
+      value: 
+      objectReference: {fileID: 661851074}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
       propertyPath: groundLayer.m_Bits
@@ -22551,6 +22635,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1315071978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6031986569010073552, guid: 8b21a09ae0af6d54dac99c1180cdf5ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1665505298}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1340467501
 GameObject:
   m_ObjectHideFlags: 0
