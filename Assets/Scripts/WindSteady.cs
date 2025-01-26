@@ -6,11 +6,9 @@ using UnityEngine;
 public class WindSteady : MonoBehaviour
 {
     //fields for calculating detection
-    [SerializeField] GameObject windOrigin;
-    [SerializeField] GameObject windCollider;
+
 
     [SerializeField] float forceMagnitude;
-
 
     [SerializeField] LayerMask terrainMask;
     [SerializeField] LayerMask blowableMask;
@@ -49,13 +47,10 @@ public class WindSteady : MonoBehaviour
     }
 
 
-    private void OnCollisionStay(Collision collision)
-    {
-        print(collision.gameObject.name);
-    }
 
     private void OnTriggerStay(Collider other)
     {
+        print("Colliding with " + other.gameObject.name);
         //only try to move blowable objects
         if(other.gameObject.tag == "Blowable")
         {
@@ -66,11 +61,11 @@ public class WindSteady : MonoBehaviour
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
             //rb.Addforce(Vector3 force);
-            rb.AddForce(gameObject.transform.up * -1 * forceMagnitude);
+            rb.AddForce((gameObject.transform.up + new Vector3(0,-0.01f,0)) * -1 * forceMagnitude);
         }
         
     }
 
-
+    
 
 }

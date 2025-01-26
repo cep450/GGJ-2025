@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4024431755863523343}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6659288697990429535}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraLoc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,9 +77,9 @@ GameObject:
   - component: {fileID: 6306791385211225959}
   - component: {fileID: 5288683641716896810}
   - component: {fileID: 26849542283983869}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,16 +216,19 @@ MonoBehaviour:
   orientation: {fileID: 4024431755863523343}
   rb: {fileID: 6306791385211225959}
   groundDrag: 5
-  walkSpeed: 2500
-  sprintSpeed: 4500
-  crouchSpeed: 1000
+  walkSpeed: 3000
+  sprintSpeed: 5000
+  crouchSpeed: 2000
   playerHeight: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   jumpForce: 10
-  jumpCooldown: 0.5
+  jumpForceForward: 10
+  jumpCooldown: 0.1
   airMultiplier: 0.6
+  maxJumps: 2
+  slamForce: 27
   isSprinting: 0
   crouchHeight: 0.5
   maxSlopeAngle: 40
