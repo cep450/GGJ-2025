@@ -10,7 +10,7 @@ public class Bubble : MonoBehaviour
     [Header("Gravity Fields")]
     [SerializeField] Vector3 gravityVector;
     [SerializeField] ConstantForce constantForce;
-    private float randomMovement = 50.05f;
+    private float randomMovement = 0.0f; //50.05f;
     [SerializeField] private GoalManager goalManager;
     [SerializeField] private float driftTimer;
     private float driftCounter;

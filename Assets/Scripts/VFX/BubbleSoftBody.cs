@@ -26,6 +26,7 @@ public class BubbleSoftBody : MonoBehaviour
     [SerializeField] GameObject dynamicPrefab;
     List<GameObject> staticVerticies = new List<GameObject>();
     List<GameObject> dynamicVerticies = new List<GameObject>();
+    Rigidbody bubbleRb;
 
 	// Start is called before the first frame update
 	void Start()
@@ -34,6 +35,7 @@ public class BubbleSoftBody : MonoBehaviour
 		gameObject.AddComponent<MeshFilter>();
 		gameObject.AddComponent<MeshRenderer>();
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
+        bubbleRb = FindObjectOfType<Bubble>().GetComponent<Rigidbody>();
 
 		//Remove existing mesh data
 		mesh.Clear();
@@ -86,8 +88,9 @@ public class BubbleSoftBody : MonoBehaviour
             //We use staticVertsGen here because we want to get the positions before they're rearranged but this loop up top
             staticVerticies.Add(Instantiate(staticPrefab, staticVertsGen.Vertices[i], Quaternion.identity));
             dynamicVerticies.Add(Instantiate(dynamicPrefab, staticVertsGen.Vertices[i], Quaternion.identity));
-            dynamicVerticies[i].GetComponent<SpringJoint>().connectedBody = staticVerticies[i].GetComponent<Rigidbody>();
-            dynamicVerticies[i].GetComponent<Rigidbody>().mass = Random.Range(0.8f, 1.2f);
+            dynamicVerticies[i].GetComponent<VFXJoint>().ConnectedBody = staticVerticies[i].GetComponent<Rigidbody>();
+            //dynamicVerticies[i].GetComponent<VFXJoint>().ConnectedBody = bubbleRb;
+            //dynamicVerticies[i].GetComponent<Rigidbody>().mass = Random.Range(0.95f, 1.05f);
         }
     }
     
@@ -114,7 +117,7 @@ public class BubbleSoftBody : MonoBehaviour
         //Move transform points
         for (int i = 0; i < staticVertsGen.Vertices.Count; i++)
         {
-            staticVerticies[i].GetComponent<Rigidbody>().MovePosition(staticVertsGen.Vertices[i] + transform.position);
+            staticVerticies[i].GetComponent<Rigidbody>().MovePosition(staticVertsGen.Vertices[i] + bubbleRb.position);
         }
 
         List<Vector3> verticiesUpdated = new List<Vector3>();
@@ -225,10 +228,12 @@ public class BubbleSoftBody : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
         for (int i = 0; i < dynamicVerticies.Count; i++)
         {
-            Gizmos.DrawSphere(dynamicVerticies[i].transform.position, 0.1f);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(dynamicVerticies[i].transform.position, 0.05f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(staticVerticies[i].transform.position, 0.05f);
         }
     }
 }
