@@ -11608,7 +11608,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1269121349}
+  m_Mesh: {fileID: 1140808245}
 --- !u!33 &481933367
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -18851,6 +18851,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26849542283983869, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: slideForce
+      value: 27500
+      objectReference: {fileID: 0}
     - target: {fileID: 4801224029982683578, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
       propertyPath: m_RootOrder
@@ -18921,6 +18926,16 @@ PrefabInstance:
       propertyPath: speedText
       value: 
       objectReference: {fileID: 1665505301}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: sprintSpeed
+      value: 3500
+      objectReference: {fileID: 0}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
       propertyPath: jumpForceForward
@@ -35022,7 +35037,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1070273657}
+  m_Mesh: {fileID: 1269121349}
 --- !u!33 &1646153011
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -35599,6 +35614,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854092730226317331, guid: 8b21a09ae0af6d54dac99c1180cdf5ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

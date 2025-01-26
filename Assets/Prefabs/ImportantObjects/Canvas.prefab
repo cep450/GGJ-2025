@@ -779,11 +779,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 339274447876919688}
   - {fileID: 7182558991776674819}
   - {fileID: 4144877694764902821}
   - {fileID: 2143142818068282108}
   - {fileID: 8258177660889758460}
-  - {fileID: 339274447876919688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
