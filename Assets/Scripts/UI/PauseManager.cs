@@ -21,18 +21,20 @@ public class PauseManager : MonoBehaviour
     {
         if(isPaused)
         {
+            print("Unpaused");
             Time.timeScale = 1.0f;
             textMesh.text = "Pause";
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             isPaused = false;
         }
         else
         {
+            print("Paused");
             Time.timeScale = 0.0f;
             textMesh.text = "Resume";
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             isPaused = true;
         }
 

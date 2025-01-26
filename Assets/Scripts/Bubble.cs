@@ -19,7 +19,7 @@ public class Bubble : MonoBehaviour
     #endregion Fields
     private void FixedUpdate()
     {
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         SomewhatRealisticGravity();
         driftCounter -= Time.fixedDeltaTime;
         if(driftCounter <= 0)
