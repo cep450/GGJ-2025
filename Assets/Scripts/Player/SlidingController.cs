@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class SlidingController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SlidingController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform orientation;
     [SerializeField] private Transform playerTransform;
+	[SerializeField] private GameObject speedLines;
     private Vector3 slideDirection;
     private Rigidbody rb;
     private PlayerController pc;
@@ -26,6 +28,8 @@ public class SlidingController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    [SerializeField] private StudioEventEmitter slidingEmmitter;
+
     //I dont feel like going back and reediting everything if I thought of the wrong key so here we are
     private KeyCode slideKey = KeyCode.LeftShift;
     #endregion Fields
@@ -36,6 +40,9 @@ public class SlidingController : MonoBehaviour
         pc = GetComponent<PlayerController>();
         normalHeight = transform.localScale.y;
         slideTime = maxSlideTime;
+
+		speedLines = GameObject.FindGameObjectWithTag("SpeedLines");
+		speedLines.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,7 +55,6 @@ public class SlidingController : MonoBehaviour
         Debug.Log("Sprint Key = " + pc.isSprinting);*/
         if(Input.GetKeyDown(slideKey) && (verticalInput != 0 || horizontalInput != 0) && pc.isSprinting)
         {
-            Debug.Log("Now Sliding?");
             StartSlide();
         }
         if(Input.GetKeyUp(slideKey) && isSliding)
@@ -72,6 +78,9 @@ public class SlidingController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, slideHeight, transform.localScale.z);
         //Push player down a bit when they slide
         rb.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+		speedLines.SetActive(true);
+        pc.SetSliding(true);
+        slidingEmmitter.Play();
     }
 
     private void Sliding()
@@ -90,6 +99,9 @@ public class SlidingController : MonoBehaviour
         isSliding = false;
         slideTime = maxSlideTime;
         transform.localScale = new Vector3(transform.localScale.x, normalHeight, transform.localScale.z);
+		speedLines.SetActive(false);
+        pc.SetSliding(false);
+        slidingEmmitter.Stop();
     }
 
     private void Inputs()

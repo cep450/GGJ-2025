@@ -78,6 +78,11 @@ GameObject:
   - component: {fileID: 5288683641716896810}
   - component: {fileID: 26849542283983869}
   - component: {fileID: 771037819859431293}
+  - component: {fileID: 1105301348398828033}
+  - component: {fileID: 5787150678326031965}
+  - component: {fileID: 8433712671469666973}
+  - component: {fileID: 2039587634158373578}
+  - component: {fileID: 2906831925037169307}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -217,6 +222,7 @@ MonoBehaviour:
   orientation: {fileID: 4024431755863523343}
   rb: {fileID: 6306791385211225959}
   groundDrag: 5
+  airDrag: 2
   walkSpeed: 3000
   sprintSpeed: 5000
   crouchSpeed: 2000
@@ -224,15 +230,20 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 10
-  jumpForceForward: 10
+  jumpForce: 11
+  jumpForceForward: 11
   jumpCooldown: 0.1
-  airMultiplier: 0.6
+  airMultiplier: 0.5
   maxJumps: 2
+  jumpBufferTime: 0.1
   slamForce: 27
   isSprinting: 0
-  crouchHeight: 0.5
+  crouchHeight: 0.55
   maxSlopeAngle: 40
+  walkingEmmitter: {fileID: 771037819859431293}
+  runningEmmitter: {fileID: 1105301348398828033}
+  jumpEmmitter: {fileID: 5787150678326031965}
+  landingEmmitter: {fileID: 2039587634158373578}
   debug: 0
   speedText: {fileID: 0}
 --- !u!114 &26849542283983869
@@ -249,9 +260,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 4024431755863523343}
   playerTransform: {fileID: 4801224029982683578}
-  maxSlideTime: 1
+  speedLines: {fileID: 0}
+  maxSlideTime: 3
   slideForce: 15000
-  slideHeight: 0.4
+  slideHeight: 0.35
+  slidingEmmitter: {fileID: 2906831925037169307}
 --- !u!114 &771037819859431293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,11 +280,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -145206408
+      Data2: 1112091159
+      Data3: -398834026
+      Data4: 361698269
+    Path: event:/SFX/Looping/movement_footstep_walk
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -281,5 +294,160 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &1105301348398828033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 111986700
+      Data2: 1214963729
+      Data3: -1197902444
+      Data4: -1372836461
+    Path: event:/SFX/Looping/movement_footstep_run
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &5787150678326031965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1173418448
+      Data2: 1337020999
+      Data3: -14620772
+      Data4: -720675351
+    Path: event:/SFX/One-Shot/movement_jump
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &8433712671469666973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -145206408
+      Data2: 1112091159
+      Data3: -398834026
+      Data4: 361698269
+    Path: event:/SFX/Looping/movement_footstep_walk
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &2039587634158373578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1325645455
+      Data2: 1097440819
+      Data3: -1690210423
+      Data4: -456068922
+    Path: event:/SFX/One-Shot/movement_land
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &2906831925037169307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8204045183763346490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -632086961
+      Data2: 1321119916
+      Data3: -1792577650
+      Data4: -877594198
+    Path: event:/SFX/One-Shot/movement_slide
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

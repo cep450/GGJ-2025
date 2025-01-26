@@ -1252,6 +1252,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26849542283983869, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
+      propertyPath: slideForce
+      value: 20000
+      objectReference: {fileID: 0}
     - target: {fileID: 4801224029982683578, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
       propertyPath: m_RootOrder
@@ -1311,11 +1316,6 @@ PrefabInstance:
         type: 3}
       propertyPath: debug
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
-        type: 3}
-      propertyPath: slamForce
-      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}

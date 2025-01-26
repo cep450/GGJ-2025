@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform orientation;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float groundDrag;
+	[SerializeField] private float airDrag;
 
     [Header("Movement Speeds")]
     private float movementSpeed;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerHeight;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
+    private bool previousGroundState;
 
     [Header("Jumping Logic")]
     [SerializeField] private float jumpForce; //haha thats a reference
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
 	[SerializeField] private int maxJumps = 2;
+	[SerializeField] private float jumpBufferTime = 0.25f;
     private bool canJump = true;
 	private int jumpCount = 0;
 	private float jumpCountdown = 0f;
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
 	[Header("Ground Slam Logic")]
 	[SerializeField] private float slamForce;
 	private bool slamming = false;
+	private GameObject slamLines;
 
     [Header("Sprinting Logic")]
     public bool isSprinting;
@@ -66,8 +70,10 @@ public class PlayerController : MonoBehaviour
     RaycastHit raycastSlopeHit;
 
     [Header("AudioStuff")]
-    [SerializeField] StudioEventEmitter walkingEmmitter;
-    [SerializeField] StudioEventEmitter runningEmmitter;
+    [SerializeField] private StudioEventEmitter walkingEmmitter;
+    [SerializeField] private StudioEventEmitter runningEmmitter;
+    [SerializeField] private StudioEventEmitter jumpEmmitter;
+    [SerializeField] private StudioEventEmitter landingEmmitter;
     private StudioEventEmitter currentEmmitter;
     /*
     [SerializeField] private AudioClip runningSFX;
@@ -85,6 +91,9 @@ public class PlayerController : MonoBehaviour
     {
         sprintWindowCounter = sprintWindow;
         normalHeight = transform.localScale.y;
+
+		slamLines = GameObject.FindGameObjectWithTag("SlamLines");
+		slamLines.SetActive(false);
     }
 
     void Update()
@@ -93,6 +102,11 @@ public class PlayerController : MonoBehaviour
 
         //Check if Grounded
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, groundLayer);
+
+        if(isGrounded && !previousGroundState)
+        {
+            landingEmmitter.Play();
+        }
 
 		//Update jump, ground slam state
 		JumpUpdate();
@@ -113,21 +127,22 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.drag = 0;
+            rb.drag = airDrag;
         }
 
         if(debug)
         {
-            speedText.text = "Speed is " + rb.velocity.magnitude;
+            speedText.text = "State is " + movementState.ToString();
         }
         lastMovementState = movementState;
+        previousGroundState = isGrounded;
     }
 
     private void StateHandler()
     {
         if(isGrounded)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && movementState != MovementState.Sliding)
             {
                 movementState = MovementState.Crouching;
                 movementSpeed = crouchSpeed;
@@ -152,13 +167,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-	public Vector3 GetPlayerForward() {
-		return orientation.forward * verticalInput + orientation.right * horizontalInput;
-	}
-
     private void MovePlayer()
     {
-        directionToMove = GetPlayerForward();
+        directionToMove = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         //On Slope
         if(OnSlope())
@@ -168,32 +179,50 @@ public class PlayerController : MonoBehaviour
 
         else if(isGrounded)
         {
+			// walking
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed, ForceMode.Force);
         }
         else
         {
+			// air control- ignore forward input, but listen to sideways and backwards
+			directionToMove = (orientation.forward * Mathf.Min(verticalInput, 0)) + orientation.right * horizontalInput;
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed * airMultiplier, ForceMode.Force);
         }
 
         //FMOD moving
-        if (movementState != lastMovementState)
+        if (movementState != lastMovementState && (verticalInput !=0 || horizontalInput != 0))
         {
+            if(currentEmmitter != null)
+            {
+                currentEmmitter.Stop();
+            }
             switch (movementState)
             {
                 case (MovementState.Walking):
                 {
                     walkingEmmitter.Play();
-                    currentEmmitter.Stop();
                     currentEmmitter = walkingEmmitter;
                 }
                 break;
                 case (MovementState.Running):
                     {
+                        runningEmmitter.Play();
+                        currentEmmitter = runningEmmitter;
+                    }
+                    break;
+                case (MovementState.Crouching):
+                    {
                         walkingEmmitter.Play();
-                        currentEmmitter.Stop();
                         currentEmmitter = walkingEmmitter;
                     }
                     break;
+            }
+        }
+        else if(verticalInput == 0 && horizontalInput == 0)
+        {
+            if(currentEmmitter != null)
+            {
+                currentEmmitter.Stop();
             }
         }
 
@@ -237,12 +266,9 @@ public class PlayerController : MonoBehaviour
             print(jumpCount);
 			// double jump 
 			jumpCount++;
-
-			//canJump = false;
             Jump();
 			jumpCountdown = jumpCooldown;
-            jumpBuffer = 0.33f;
-            //Invoke("ResetJump", jumpCooldown);
+            jumpBuffer = jumpBufferTime;
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -286,7 +312,15 @@ public class PlayerController : MonoBehaviour
         print("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-		rb.AddForce(GetPlayerForward() * jumpForceForward, ForceMode.Impulse);
+		
+		rb.AddForce(orientation.forward * jumpForceForward, ForceMode.Impulse);
+        jumpEmmitter.Play();
+        if(currentEmmitter != null)
+        {
+            currentEmmitter.Stop();
+        }
+
+        
     }
 
     private void ResetJump()
@@ -300,11 +334,13 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(-transform.up * slamForce, ForceMode.Impulse);
 		//TODO create some push force and particles when you land, e.g. spawn a projectile?
 		slamming = true;
+		slamLines.SetActive(true);
 	}
 
 	private void SlamUpdate() {
 		if(isGrounded) {
 			slamming = false;
+			slamLines.SetActive(false);
 		}
 	}
 
@@ -371,5 +407,30 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void SetSliding(bool sliding)
+    {
+        
+        if(sliding)
+        {
+            movementState = MovementState.Sliding;
+            if(currentEmmitter != null)
+            {
+
+            }
+            currentEmmitter.Stop();
+        }
+        else
+        {
+            if(isGrounded)
+            {
+                movementState = MovementState.Walking;
+            }
+            else
+            {
+                movementState = MovementState.Airborn;
+            }
+        }
     }
 }
