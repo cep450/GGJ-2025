@@ -6,6 +6,7 @@ public class TextBounce : MonoBehaviour
 {
     //Fields
     [SerializeField] float startingValue;
+    [SerializeField] float staggerRate = 0.2f;
     [SerializeField] float amount = 2f;
     [SerializeField] float speed = 1f;   
     float startingPositionY;
@@ -19,7 +20,7 @@ public class TextBounce : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, startingPositionY + (Mathf.Sin(startingValue + Time.time * speed) * amount), transform.position.z);
+        transform.position = new Vector3(transform.position.x, startingPositionY + (Mathf.Sin((startingValue * staggerRate) + Time.time * speed) * amount), transform.position.z);
         Debug.Log((Mathf.Sin(startingValue + Time.time)));
     }
 }
