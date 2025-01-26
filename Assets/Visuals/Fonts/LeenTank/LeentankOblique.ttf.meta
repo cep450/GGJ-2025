@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 4e3ae15dc880d8348a1167b67d7a2490
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Leentank Oblique
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3e07eed4c9b2f8f4ab5c815246b35da3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

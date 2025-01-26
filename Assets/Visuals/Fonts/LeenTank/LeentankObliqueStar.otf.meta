@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1f377bd522b0f6f4e9e1408bc433aa51
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Leentank Oblique Star
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3486fb7b06c893647b113ea13ef905fc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

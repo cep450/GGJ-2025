@@ -16,6 +16,10 @@ public class Bubble : MonoBehaviour
     private float driftCounter;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private TextMeshProUGUI scoreText;
+    private string endGameText = "Hate to burst your bubble,\nbut you burst your bubble.";
+    [SerializeField] private TextMeshProUGUI endGameTextObject;
+    [SerializeField] private AudioSource popSFX;
+    [SerializeField] private AudioSource musicSource;
     #endregion Fields
     private void FixedUpdate()
     {
@@ -46,11 +50,15 @@ public class Bubble : MonoBehaviour
     private void Popped()
     {
         //Insert Pop VFX
-        gameObject.SetActive(false);
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        musicSource.Pause();
+        popSFX.Play();
+
         //Insert Retry Level Pop Up
         Cursor.lockState = CursorLockMode.Confined;
         gameOverCanvas.SetActive(true);
         scoreText.text = $"Final Score: {goalManager.score}";
+        StartCoroutine(TextGenerator());
     }
 
     private void SomewhatRealisticGravity()
@@ -58,5 +66,22 @@ public class Bubble : MonoBehaviour
         float randoX = Random.value * randomMovement - (randomMovement / 2);
         float randoZ = Random.value * randomMovement - (randomMovement / 2);
         constantForce.relativeForce = gravityVector + new Vector3(randoX, 0, randoZ);
+    }
+
+    private IEnumerator TextGenerator()
+    {
+        for(int i = 0; i < endGameText.Length; i++)
+        {
+            endGameTextObject.text = endGameText.Substring(0, i + 1);
+            yield return new WaitForSeconds(0.035f);
+
+            if(i == 10)
+            {
+                musicSource.Play();
+                musicSource.volume = 0.5f;
+                musicSource.pitch = 0.5f;
+            }
+        }
+        gameObject.SetActive(false);
     }
 }
