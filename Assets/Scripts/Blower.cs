@@ -33,18 +33,18 @@ public class Blower : MonoBehaviour
         //state machine that handles the type of wind the player wants to shoot
 
         //if press space, spawn a steady wind
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SpawnSteadyWind();
         }
         //if release space, despawn the steady wind
-        if (Input.GetKeyUp(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             GameObject.Destroy(wind);
         }
 
         //if press right key, spawn burst wind
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             SpawnBurstWind();
         }

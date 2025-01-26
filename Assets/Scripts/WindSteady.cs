@@ -59,7 +59,6 @@ public class WindSteady : MonoBehaviour
         //only try to move blowable objects
         if(other.gameObject.tag == "Blowable")
         {
-            print(other.gameObject.name);
 
             //for each object that should be blown, calculate magnitude and direction of the force
             //apply force

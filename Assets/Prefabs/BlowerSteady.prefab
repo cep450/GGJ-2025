@@ -120,13 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af60bd375d67cc54b83b4e39fc3443ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {fileID: 0}
-  radius: 1
-  direction: {x: 0, y: 0, z: 0, w: 0}
-  range: 5
   windOrigin: {fileID: 0}
   windCollider: {fileID: 0}
-  forceMagnitude: 5
+  forceMagnitude: 12
   terrainMask:
     serializedVersion: 2
     m_Bits: 0
