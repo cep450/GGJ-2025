@@ -228,6 +228,7 @@ MonoBehaviour:
   jumpCooldown: 0.1
   airMultiplier: 0.6
   maxJumps: 2
+  slamForce: 27
   isSprinting: 0
   crouchHeight: 0.5
   maxSlopeAngle: 40

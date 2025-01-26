@@ -1314,6 +1314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
         type: 3}
+      propertyPath: slamForce
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288683641716896810, guid: 3802784a63b5dbb4e8728dfe504aaa07,
+        type: 3}
       propertyPath: speedText
       value: 
       objectReference: {fileID: 1325978856}

@@ -45,17 +45,21 @@ public class PlayerController : MonoBehaviour
 	private int jumpCount = 0;
 	private float jumpCountdown = 0f;
 
-    [Header("SprintingLogic")]
+	[Header("Ground Slam Logic")]
+	[SerializeField] private float slamForce;
+	private bool slamming = false;
+
+    [Header("Sprinting Logic")]
     public bool isSprinting;
     private float sprintWindow = 0.5f;
     private float sprintWindowCounter;
     private int sprintButtonPresses = 0;
 
-    [Header("CrouchingLogic")]
+    [Header("Crouching Logic")]
     [SerializeField] private float crouchHeight;
     private float normalHeight;
 
-    [Header("SlopeLogic")]
+    [Header("Slope Logic")]
     [SerializeField] private float maxSlopeAngle;
     RaycastHit raycastSlopeHit;
 
@@ -74,13 +78,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-		
 
         //Check if Grounded
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
 
-		//Update jump state
+		//Update jump, ground slam state
 		JumpUpdate();
+		SlamUpdate();
 
         Inputs();
 
@@ -214,6 +218,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, normalHeight, transform.localScale.z);
         }
+		else if(!isGrounded && !slamming && Input.GetKeyDown(KeyCode.LeftControl)) {
+
+			GroundSlam();
+
+		}
     }
 
 	// for double jumps 
@@ -227,7 +236,6 @@ public class PlayerController : MonoBehaviour
 		if(isGrounded) {
 			jumpCount = 0;
 		}
-		
 	}
 
     private void Jump()
@@ -242,6 +250,20 @@ public class PlayerController : MonoBehaviour
     {
         canJump = true;
     }
+
+	private void GroundSlam() {
+		// it's like a reverse jump
+		rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.AddForce(-transform.up * slamForce, ForceMode.Impulse);
+		//TODO create some push force and particles when you land, e.g. spawn a projectile?
+		slamming = true;
+	}
+
+	private void SlamUpdate() {
+		if(isGrounded) {
+			slamming = false;
+		}
+	}
 
     private void SprintCheck()
     {
