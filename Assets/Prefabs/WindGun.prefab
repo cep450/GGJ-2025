@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &361307521528482901
 MonoBehaviour:
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed3237981a4a1e4c88fa6a9eff2f9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windSteady: {fileID: 7398753728652137592, guid: f510810803452ff4b8b3f791afbd6acf,
+  windSteady: {fileID: 3240057813605901809, guid: d31e3f671409a824e8d678bc0799b2b4,
     type: 3}
   windBlast: {fileID: 6470062616826517308, guid: dead04007b5d6434cba0e5da056c6025,
     type: 3}

@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSlopeAngle;
     RaycastHit raycastSlopeHit;
 
+    [Header("AudioStuff")]
+    [SerializeField] private AudioClip runningSFX;
+    [SerializeField] private AudioClip[] walkingSFXs;
+    [SerializeField] private AudioSource audioSource;
+    private MovementState lastMovementState;
     private MovementState movementState;
 
     [Header("Debug")]
@@ -109,7 +114,7 @@ public class PlayerController : MonoBehaviour
         {
             speedText.text = "Speed is " + rb.velocity.magnitude;
         }
-
+        lastMovementState = movementState;
     }
 
     private void StateHandler()
@@ -322,5 +327,21 @@ public class PlayerController : MonoBehaviour
     private Vector3 GetSlopeMovementAngle()
     {
         return (Vector3.ProjectOnPlane(directionToMove, raycastSlopeHit.normal)).normalized;
+    }
+
+    private void PlayerAudioHandler()
+    {
+        switch(movementState)
+        {
+            case MovementState.Running:
+                {
+                   if(lastMovementState != MovementState.Running)
+                   {
+
+                   }
+                }
+                break;
+        }
+
     }
 }
