@@ -2989,48 +2989,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2685221274880772337}
     m_Modifications:
-    - target: {fileID: 156174818379520254, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 410
-      objectReference: {fileID: 0}
     - target: {fileID: 537117660148733808, guid: 28d5a55aeb992be44b9a89195e0596ea,
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 917389911207239694, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -347
-      objectReference: {fileID: 0}
-    - target: {fileID: 2756481748640393286, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_text
-      value: 'MOVE..........................................WASD
-
-        JUMP (DOUBLE).................SPACE
-
-        AIR.BURST...............RIGHT.MOUSE
-
-        AIR.CONTINUOUS...LEFT.MOUSE
-
-        SPRINT....................DOUBLE.TAP.W
-
-        CROUCH..........................LEFT.SHIFT
-
-        SLIDE.................SPRINT.+.CROUCH
-
-        GROUND.SLAM.............LEFT.CTRL
-
-
-        DELIVER
-        BUBBLE TO YELLOW POINT'
-      objectReference: {fileID: 0}
-    - target: {fileID: 2756481748640393286, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2756481748640393286, guid: 28d5a55aeb992be44b9a89195e0596ea,
         type: 3}
@@ -3142,11 +3104,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6632149226894853131, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 216
-      objectReference: {fileID: 0}
     - target: {fileID: 7423177871166139865, guid: 28d5a55aeb992be44b9a89195e0596ea,
         type: 3}
       propertyPath: m_Name
@@ -3156,21 +3113,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698638535478725529, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.9622642
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698638535478725529, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.9198718
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698638535478725529, guid: 28d5a55aeb992be44b9a89195e0596ea,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.7126202
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
