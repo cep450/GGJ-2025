@@ -16,10 +16,10 @@ public class BubbleSoftBody : MonoBehaviour
 	[Header("Resolution")]
 	[Range(0, 5)] [SerializeField] private int subdivisions = 1;
 	[Header("Graphics")]
-	[SerializeField] private Shader shader;
 	private GameObject sphereMesh;
 	private IcosahedronGenerator icosahedron;
 	private int lastSubdivision = int.MinValue;
+    [SerializeField] Material material;
 
     //SoftBody
     [SerializeField] GameObject staticPrefab;
@@ -142,7 +142,8 @@ public class BubbleSoftBody : MonoBehaviour
         this.sphereMesh.transform.parent = this.transform;
 
         MeshRenderer surfaceRenderer = this.sphereMesh.AddComponent<MeshRenderer>();
-        surfaceRenderer.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        //surfaceRenderer.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        surfaceRenderer.sharedMaterial = material;
 
         Mesh sphereMesh = new Mesh();
 
