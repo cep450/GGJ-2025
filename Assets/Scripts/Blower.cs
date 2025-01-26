@@ -61,6 +61,7 @@ public class Blower : MonoBehaviour
     public GameObject SpawnSteadyWind()
     {
         wind = Instantiate(windSteady, spawnTransform);
+        
         return wind;
     }
 
