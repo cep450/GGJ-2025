@@ -21,6 +21,6 @@ public class TextBounce : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(transform.position.x, startingPositionY + (Mathf.Sin((startingValue * staggerRate) + Time.time * speed) * amount), transform.position.z);
-        Debug.Log((Mathf.Sin(startingValue + Time.time)));
+        //Debug.Log((Mathf.Sin(startingValue + Time.time)));
     }
 }
