@@ -131,7 +131,7 @@ MonoBehaviour:
     m_Bits: 256
   range: 3
   maxExplosionRange: 0
-  explosionForce: 0.5
+  explosionForce: 0.75
 --- !u!54 &1419826683006501037
 Rigidbody:
   m_ObjectHideFlags: 0
