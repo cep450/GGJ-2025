@@ -2086,7 +2086,7 @@ PrefabInstance:
     - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
       propertyPath: gravityVector.y
-      value: -0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3625888032613980843, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
@@ -2096,6 +2096,16 @@ PrefabInstance:
     - target: {fileID: 4155543673121446160, guid: c264b76341595f543b13a323cb89c70f,
         type: 3}
       propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976753930027566252, guid: c264b76341595f543b13a323cb89c70f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988539589693251419, guid: c264b76341595f543b13a323cb89c70f,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6908362310650887534, guid: c264b76341595f543b13a323cb89c70f,

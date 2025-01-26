@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,9 +69,14 @@ public class PlayerController : MonoBehaviour
     RaycastHit raycastSlopeHit;
 
     [Header("AudioStuff")]
+    [SerializeField] StudioEventEmitter walkingEmmitter;
+    [SerializeField] StudioEventEmitter runningEmmitter;
+    private StudioEventEmitter currentEmmitter;
+    /*
     [SerializeField] private AudioClip runningSFX;
     [SerializeField] private AudioClip[] walkingSFXs;
     [SerializeField] private AudioSource audioSource;
+    */
     private MovementState lastMovementState;
     private MovementState movementState;
 
@@ -172,6 +178,28 @@ public class PlayerController : MonoBehaviour
 			// air control- ignore forward input, but listen to sideways and backwards
 			directionToMove = (orientation.forward * Mathf.Min(verticalInput, 0)) + orientation.right * horizontalInput;
             rb.AddForce(directionToMove.normalized * Time.deltaTime * movementSpeed * airMultiplier, ForceMode.Force);
+        }
+
+        //FMOD moving
+        if (movementState != lastMovementState)
+        {
+            switch (movementState)
+            {
+                case (MovementState.Walking):
+                {
+                    walkingEmmitter.Play();
+                    currentEmmitter.Stop();
+                    currentEmmitter = walkingEmmitter;
+                }
+                break;
+                case (MovementState.Running):
+                    {
+                        walkingEmmitter.Play();
+                        currentEmmitter.Stop();
+                        currentEmmitter = walkingEmmitter;
+                    }
+                    break;
+            }
         }
 
         SpeedControl();

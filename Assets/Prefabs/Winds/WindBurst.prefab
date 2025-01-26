@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4568867717487182660}
   - component: {fileID: 1419826683006501037}
   - component: {fileID: 5088998971562755024}
+  - component: {fileID: 8310178018267877079}
   m_Layer: 0
   m_Name: WindBurst
   m_TagString: Untagged
@@ -254,3 +255,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8310178018267877079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470062616826517308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1024006622
+      Data2: 1095917635
+      Data3: -858345545
+      Data4: -2121860205
+    Path: event:/SFX/One-Shot/wind_burst
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
