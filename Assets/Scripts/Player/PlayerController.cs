@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool canJump = true;
 	private int jumpCount = 0;
 	private float jumpCountdown = 0f;
+    private float jumpBuffer = 0.0f;
 
 	[Header("Ground Slam Logic")]
 	[SerializeField] private float slamForce;
@@ -63,6 +64,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSlopeAngle;
     RaycastHit raycastSlopeHit;
 
+    [Header("AudioStuff")]
+    [SerializeField] private AudioClip runningSFX;
+    [SerializeField] private AudioClip[] walkingSFXs;
+    [SerializeField] private AudioSource audioSource;
+    private MovementState lastMovementState;
     private MovementState movementState;
 
     [Header("Debug")]
@@ -80,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
 
         //Check if Grounded
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, groundLayer);
 
 		//Update jump, ground slam state
 		JumpUpdate();
@@ -108,7 +114,7 @@ public class PlayerController : MonoBehaviour
         {
             speedText.text = "Speed is " + rb.velocity.magnitude;
         }
-
+        lastMovementState = movementState;
     }
 
     private void StateHandler()
@@ -200,10 +206,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && canJump && jumpCount < maxJumps && jumpCountdown <= 0f)
         {
+            print(jumpCount);
 			// double jump 
 			jumpCount++;
             Jump();
 			jumpCountdown = jumpCooldown;
+            jumpBuffer = 0.33f;
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -231,7 +239,14 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if(isGrounded) {
-			jumpCount = 0;
+            if(jumpBuffer <= 0)
+            {
+                jumpCount = 0;
+            }
+			else
+            {
+                jumpBuffer -= Time.deltaTime;
+            }
 		}
 	}
 
@@ -309,5 +324,21 @@ public class PlayerController : MonoBehaviour
     private Vector3 GetSlopeMovementAngle()
     {
         return (Vector3.ProjectOnPlane(directionToMove, raycastSlopeHit.normal)).normalized;
+    }
+
+    private void PlayerAudioHandler()
+    {
+        switch(movementState)
+        {
+            case MovementState.Running:
+                {
+                   if(lastMovementState != MovementState.Running)
+                   {
+
+                   }
+                }
+                break;
+        }
+
     }
 }

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 5e018901f98088641bfe1b79baf6d073
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Leentank Star
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5861c0996168cf844899d5badabe3045, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
