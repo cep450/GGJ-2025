@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Blowable
   - GoalPoint
+  - SpeedLines
   layers:
   - Default
   - TransparentFX

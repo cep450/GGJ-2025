@@ -232,7 +232,7 @@ MonoBehaviour:
   maxJumps: 2
   slamForce: 27
   isSprinting: 0
-  crouchHeight: 0.5
+  crouchHeight: 0.55
   maxSlopeAngle: 40
   runningSFX: {fileID: 0}
   walkingSFXs: []
@@ -253,9 +253,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 4024431755863523343}
   playerTransform: {fileID: 4801224029982683578}
+  speedLines: {fileID: 0}
   maxSlideTime: 1
   slideForce: 15000
-  slideHeight: 0.4
+  slideHeight: 0.35
 --- !u!82 &4418257396683758075
 AudioSource:
   m_ObjectHideFlags: 0
