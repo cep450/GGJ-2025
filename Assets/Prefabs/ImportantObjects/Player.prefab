@@ -216,18 +216,21 @@ MonoBehaviour:
   orientation: {fileID: 4024431755863523343}
   rb: {fileID: 6306791385211225959}
   groundDrag: 5
-  walkSpeed: 2500
-  sprintSpeed: 4500
-  crouchSpeed: 1000
+  walkSpeed: 3000
+  sprintSpeed: 5000
+  crouchSpeed: 2000
   playerHeight: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   jumpForce: 10
-  jumpCooldown: 0.5
+  jumpForceForward: 10
+  jumpCooldown: 0.1
   airMultiplier: 0.6
+  maxJumps: 2
   crouchHeight: 0.5
   maxSlopeAngle: 40
+  debug: 0
   speedText: {fileID: 0}
 --- !u!114 &26849542283983869
 MonoBehaviour:

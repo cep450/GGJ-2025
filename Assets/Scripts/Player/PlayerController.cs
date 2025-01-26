@@ -36,9 +36,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jumping Logic")]
     [SerializeField] private float jumpForce; //haha thats a reference
+	[SerializeField] private float jumpForceForward;
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
+	[SerializeField] private int maxJumps = 2;
     private bool canJump = true;
+	private int jumpCount = 0;
+	private float jumpCountdown = 0f;
 
     [Header("SprintingLogic")]
     private bool isSprinting;
@@ -68,8 +72,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+		
+
         //Check if Grounded
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
+
+		//Update jump state
+		JumpUpdate();
+
         Inputs();
 
         //Evaluate State of player 
@@ -124,9 +135,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
+	public Vector3 GetPlayerForward() {
+		return orientation.forward * verticalInput + orientation.right * horizontalInput;
+	}
+
     private void MovePlayer()
     {
-        directionToMove = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        directionToMove = GetPlayerForward();
 
         //On Slope
         if(OnSlope())
@@ -175,15 +190,18 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        
 
         SprintCheck();
 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space) && canJump)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && jumpCount < maxJumps && jumpCountdown <= 0f)
         {
-            canJump = false;
+			// double jump 
+			jumpCount++;
+
+			//canJump = false;
             Jump();
-            Invoke("ResetJump", jumpCooldown);
+			jumpCountdown = jumpCooldown;
+            //Invoke("ResetJump", jumpCooldown);
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -197,11 +215,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	// for double jumps 
+	private void JumpUpdate() {
+
+		jumpCountdown -= Time.deltaTime; 
+		if(jumpCountdown <= 0) {
+			jumpCountdown = 0; 
+		}
+
+		if(isGrounded) {
+			jumpCount = 0;
+		}
+		
+	}
+
     private void Jump()
     {
         print("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce ,ForceMode.Impulse);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+		rb.AddForce(GetPlayerForward() * jumpForceForward, ForceMode.Impulse);
     }
 
     private void ResetJump()
