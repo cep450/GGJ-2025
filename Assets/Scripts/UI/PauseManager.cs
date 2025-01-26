@@ -30,7 +30,7 @@ public class PauseManager : MonoBehaviour
         {
             print("Paused");
             Time.timeScale = 0.0f;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             isPaused = true;
         }
