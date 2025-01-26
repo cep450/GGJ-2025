@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{8d8cb051-51e7-4ff8-b69d-f6a5c35fc62b}">
+		<property name="assetPath">
+			<value>titlescreen_ambience.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>102.57068750000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2a620260-fb3f-4904-880f-d8f80866432a}</destination>
+		</relationship>
+	</object>
+</objects>
