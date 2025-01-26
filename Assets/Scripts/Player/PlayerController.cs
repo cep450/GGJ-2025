@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
         Walking,
         Running,
         Crouching,
+        Sliding,
         Airborn
     }
     [Header("Movement")]
@@ -36,25 +37,36 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jumping Logic")]
     [SerializeField] private float jumpForce; //haha thats a reference
+	[SerializeField] private float jumpForceForward;
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
+	[SerializeField] private int maxJumps = 2;
     private bool canJump = true;
+	private int jumpCount = 0;
+	private float jumpCountdown = 0f;
 
-    [Header("SprintingLogic")]
-    private bool isSprinting;
+	[Header("Ground Slam Logic")]
+	[SerializeField] private float slamForce;
+	private bool slamming = false;
+
+    [Header("Sprinting Logic")]
+    public bool isSprinting;
     private float sprintWindow = 0.5f;
     private float sprintWindowCounter;
     private int sprintButtonPresses = 0;
 
-    [Header("CrouchingLogic")]
+    [Header("Crouching Logic")]
     [SerializeField] private float crouchHeight;
     private float normalHeight;
 
-    [Header("SlopeLogic")]
+    [Header("Slope Logic")]
     [SerializeField] private float maxSlopeAngle;
     RaycastHit raycastSlopeHit;
 
     private MovementState movementState;
+
+    [Header("Debug")]
+    [SerializeField] private bool debug;
     [SerializeField] TextMeshProUGUI speedText;
     #endregion Fields
     void Start()
@@ -65,8 +77,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
         //Check if Grounded
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
+
+		//Update jump, ground slam state
+		JumpUpdate();
+		SlamUpdate();
+
         Inputs();
 
         //Evaluate State of player 
@@ -85,22 +104,26 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
-        speedText.text = "Speed is " + rb.velocity.magnitude;
+        if(debug)
+        {
+            speedText.text = "Speed is " + rb.velocity.magnitude;
+        }
+
     }
 
     private void StateHandler()
     {
         if(isGrounded)
         {
-            if (isSprinting)
-            {
-                movementState = MovementState.Running;
-                movementSpeed = sprintSpeed;
-            }
-            else if(Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 movementState = MovementState.Crouching;
                 movementSpeed = crouchSpeed;
+            }
+            else if (isSprinting)
+            {
+                movementState = MovementState.Running;
+                movementSpeed = sprintSpeed;
             }
             else
             {
@@ -113,17 +136,21 @@ public class PlayerController : MonoBehaviour
         {
             movementState = MovementState.Airborn;
         }
-            
+
+
     }
+
+	public Vector3 GetPlayerForward() {
+		return orientation.forward * verticalInput + orientation.right * horizontalInput;
+	}
 
     private void MovePlayer()
     {
-        directionToMove = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        directionToMove = GetPlayerForward();
 
         //On Slope
         if(OnSlope())
         {
-            Debug.Log("Slope Movment");
             rb.AddForce(GetSlopeMovementAngle() * Time.deltaTime * movementSpeed , ForceMode.Force);
         }
 
@@ -168,13 +195,18 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+
         SprintCheck();
 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space) && canJump)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && jumpCount < maxJumps && jumpCountdown <= 0f)
         {
-            canJump = false;
+			// double jump 
+			jumpCount++;
+
+			//canJump = false;
             Jump();
-            Invoke("ResetJump", jumpCooldown);
+			jumpCountdown = jumpCooldown;
+            //Invoke("ResetJump", jumpCooldown);
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -186,19 +218,52 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, normalHeight, transform.localScale.z);
         }
+		else if(!isGrounded && !slamming && Input.GetKeyDown(KeyCode.LeftControl)) {
+
+			GroundSlam();
+
+		}
     }
+
+	// for double jumps 
+	private void JumpUpdate() {
+
+		jumpCountdown -= Time.deltaTime; 
+		if(jumpCountdown <= 0) {
+			jumpCountdown = 0; 
+		}
+
+		if(isGrounded) {
+			jumpCount = 0;
+		}
+	}
 
     private void Jump()
     {
         print("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce ,ForceMode.Impulse);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+		rb.AddForce(GetPlayerForward() * jumpForceForward, ForceMode.Impulse);
     }
 
     private void ResetJump()
     {
         canJump = true;
     }
+
+	private void GroundSlam() {
+		// it's like a reverse jump
+		rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.AddForce(-transform.up * slamForce, ForceMode.Impulse);
+		//TODO create some push force and particles when you land, e.g. spawn a projectile?
+		slamming = true;
+	}
+
+	private void SlamUpdate() {
+		if(isGrounded) {
+			slamming = false;
+		}
+	}
 
     private void SprintCheck()
     {
