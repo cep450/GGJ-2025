@@ -202,11 +202,8 @@ public class PlayerController : MonoBehaviour
         {
 			// double jump 
 			jumpCount++;
-
-			//canJump = false;
             Jump();
 			jumpCountdown = jumpCooldown;
-            //Invoke("ResetJump", jumpCooldown);
         }
         if(isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
         {
