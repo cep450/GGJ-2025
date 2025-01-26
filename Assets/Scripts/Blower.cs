@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum WindType
@@ -19,6 +20,7 @@ public class Blower : MonoBehaviour
     public Input burstInput;
 
     private GameObject wind;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,10 @@ public class Blower : MonoBehaviour
         {
             SpawnBurstWind();
         }
+        
+
+        //calculate vector from camera to windgun
+        
     }
 
     /// <summary>
@@ -60,7 +66,9 @@ public class Blower : MonoBehaviour
 
     public void SpawnBurstWind()
     {
-        Instantiate(windBlast, spawnTransform);
+        Projectile burst = Instantiate(windBlast, spawnTransform).GetComponent<Projectile>();
+
+        //burst.
     }
 
     /// <summary>
@@ -69,5 +77,10 @@ public class Blower : MonoBehaviour
     public void DestroyWind()
     {
         GameObject.Destroy(wind);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(spawnTransform.position, gameObject.transform.right * -1 * 5.0f);
     }
 }

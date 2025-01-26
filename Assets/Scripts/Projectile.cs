@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     public float speed;
     private float timer;
     // Start is called before the first frame update
+
     void Start()
     {
        
@@ -32,7 +33,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         //move forward
-        gameObject.transform.Translate(gameObject.transform.forward * speed);
+        gameObject.transform.Translate(gameObject.transform.up * -1 * speed, Space.World);
 
         //update the life timer
         timer -= Time.deltaTime;
