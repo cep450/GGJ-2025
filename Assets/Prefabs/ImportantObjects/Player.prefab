@@ -225,8 +225,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 10
-  jumpForceForward: 10
+  jumpForce: 11
+  jumpForceForward: 11
   jumpCooldown: 0.1
   airMultiplier: 0.5
   maxJumps: 2
