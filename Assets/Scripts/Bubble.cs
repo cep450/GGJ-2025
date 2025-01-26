@@ -18,7 +18,9 @@ public class Bubble : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     private string endGameText = "Hate to burst your bubble,\nbut you burst your bubble.";
     [SerializeField] private TextMeshProUGUI endGameTextObject;
+    //And this
     [SerializeField] private AudioSource popSFX;
+    //Replace this Anna
     [SerializeField] private AudioSource musicSource;
     #endregion Fields
     private void FixedUpdate()
