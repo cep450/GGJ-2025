@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
         //default values for speed and lifespan if not otherwise set
         if (speed == 0)
         {
-            speed = 0.05f;
+            speed = 0.5f;
         }
         if (lifespan == 0)
         {
@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //before exploding:
         if (!exploding)
@@ -86,11 +86,6 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     /// <summary>
