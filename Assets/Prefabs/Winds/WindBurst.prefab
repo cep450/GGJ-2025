@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifespan: 1
-  speed: 0.05
+  speed: 0.5
   explosionTimer: 1
   layersToBomb:
     serializedVersion: 2
@@ -132,6 +132,8 @@ MonoBehaviour:
   range: 3
   maxExplosionRange: 0
   explosionForce: 0.75
+  explosionUpTransform: 0.5
+  explosionRadius: 10
 --- !u!54 &1419826683006501037
 Rigidbody:
   m_ObjectHideFlags: 0
