@@ -27,12 +27,6 @@ public class Bubble : MonoBehaviour
     private void FixedUpdate()
     {
         //Debug.Log(rb.velocity.magnitude);
-        SomewhatRealisticGravity();
-        driftCounter -= Time.fixedDeltaTime;
-        if(driftCounter <= 0)
-        {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
-        }
         rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -1, 0), rb.velocity.z);
     }
 
@@ -66,12 +60,7 @@ public class Bubble : MonoBehaviour
         StartCoroutine(TextGenerator());
     }
 
-    private void SomewhatRealisticGravity()
-    {
-        float randoX = Random.value * randomMovement - (randomMovement / 2);
-        float randoZ = Random.value * randomMovement - (randomMovement / 2);
-        constantForce.relativeForce = gravityVector + new Vector3(randoX, 0, randoZ);
-    }
+
 
     private IEnumerator TextGenerator()
     {

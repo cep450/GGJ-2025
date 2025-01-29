@@ -181,13 +181,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af60bd375d67cc54b83b4e39fc3443ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMagnitude: 20
+  forceMagnitude: 5
   terrainMask:
     serializedVersion: 2
     m_Bits: 0
   blowableMask:
     serializedVersion: 2
     m_Bits: 0
+  upForceAmount: -8.4
 --- !u!114 &304300239661327679
 MonoBehaviour:
   m_ObjectHideFlags: 0
